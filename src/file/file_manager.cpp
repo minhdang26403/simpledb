@@ -8,10 +8,12 @@ FileManager::FileManager(const fs::path& db_directory_path, int block_size)
     : db_directory_path_(db_directory_path), block_size_(block_size) {
   is_new_ = !fs::directory_entry{db_directory_path_}.exists();
 
+  // Create the directory to hold the database if the database is new
   if (is_new_) {
     fs::create_directories(db_directory_path_);
   }
 
+  // Remove any leftover temporary tables
   for (const auto& directory_entry :
        fs::directory_iterator{db_directory_path_}) {
     const auto& entry_path = directory_entry.path();
@@ -26,6 +28,7 @@ void FileManager::Read(const BlockId& block, const Page& page) {
   std::fstream& file = GetFile(block.Filename());
   file.seekp(block.BlockNumber() * block_size_, std::ios_base::beg);
   std::span<char> page_view = page.Contents();
+  // Read data from file into the page
   file.read(page_view.data(), page_view.size());
 }
 
@@ -34,6 +37,7 @@ void FileManager::Write(const BlockId& block, const Page& page) {
   std::fstream& file = GetFile(block.Filename());
   file.seekp(block.BlockNumber() * block_size_, std::ios_base::beg);
   std::span<char> page_view = page.Contents();
+  // Write data from page to the file
   file.write(page_view.data(), page_view.size());
   file.flush();
 }
@@ -45,6 +49,7 @@ BlockId FileManager::Append(std::string_view filename) {
   std::fstream& file = GetFile(block.Filename());
   file.seekp(block.BlockNumber() * block_size_);
   auto bytes = std::make_unique<char[]>(block_size_);
+  // Write a block of zeroed bytes to the end of the file
   file.write(bytes.get(), block_size_);
   file.flush();
   return block;
@@ -79,5 +84,4 @@ std::fstream& FileManager::GetFile(std::string_view filename) {
   }
   return entry->second;
 }
-
 }  // namespace simpledb

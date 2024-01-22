@@ -22,5 +22,4 @@ bool BlockId::operator==(const BlockId& other) const noexcept {
 bool BlockId::operator!=(const BlockId& other) const noexcept {
   return !(*this == other);
 }
-
 }  // namespace simpledb

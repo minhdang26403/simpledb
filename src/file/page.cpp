@@ -3,7 +3,6 @@
 #include <cstring>
 
 namespace simpledb {
-
 int Page::GetInt(int offset) const noexcept {
   int num;
   std::memcpy(&num, &byte_buffer_[offset], sizeof(int));
@@ -17,6 +16,7 @@ void Page::SetInt(int offset, int num) noexcept {
 std::span<char> Page::GetBytes(int offset) const noexcept {
   // TODO(DANG): reference to the underlying bytes (span)
   // or allocate a new chunk of bytes (unique_ptr)
+  // A blob is saved as two values: the number of bytes and the bytes themselves
   char* ptr = &byte_buffer_[offset];
   int length;
   std::memcpy(&length, ptr, sizeof(int));
@@ -39,11 +39,13 @@ std::string_view Page::GetString(int offset) const noexcept {
 }
 
 void Page::SetString(int offset, std::string_view s) noexcept {
+  // `std::string_view` is a constant view, but `std::span` is a modifiable
+  // view. Need to cast away const to construct a `span` object. `SetBytes`
+  // promises not to modify the `string_view` s
   SetBytes(offset, std::span{const_cast<char*>(s.data()), s.size()});
 }
 
 std::span<char> Page::Contents() const noexcept {
   return std::span{byte_buffer_.get(), static_cast<size_t>(size_)};
 }
-
 }  // namespace simpledb
