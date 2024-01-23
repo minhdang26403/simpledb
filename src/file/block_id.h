@@ -11,6 +11,11 @@ namespace simpledb {
 class BlockId {
  public:
   /**
+   * @brief Default constructor
+   */
+  BlockId() = default;
+
+  /**
    * @brief Constructs a BlockId object
    * @param filename name of the file that this block refers to
    * @param block_num logical block number within the file
