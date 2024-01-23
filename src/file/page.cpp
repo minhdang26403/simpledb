@@ -3,9 +3,16 @@
 #include <cstring>
 
 namespace simpledb {
+Page::~Page() {
+  if (own_memory_) {
+    delete[] byte_buffer_;
+  }
+}
+
 int Page::GetInt(int offset) const noexcept {
   int num;
   std::memcpy(&num, &byte_buffer_[offset], sizeof(int));
+
   return num;
 }
 
@@ -35,6 +42,7 @@ void Page::SetBytes(int offset, std::span<char> bytes) noexcept {
 
 std::string_view Page::GetString(int offset) const noexcept {
   std::span<char> bytes = GetBytes(offset);
+
   return std::string_view{bytes.data(), bytes.size()};
 }
 
@@ -46,6 +54,6 @@ void Page::SetString(int offset, std::string_view s) noexcept {
 }
 
 std::span<char> Page::Contents() const noexcept {
-  return std::span{byte_buffer_.get(), static_cast<size_t>(size_)};
+  return std::span{byte_buffer_, static_cast<size_t>(size_)};
 }
 }  // namespace simpledb

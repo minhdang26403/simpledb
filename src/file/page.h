@@ -17,16 +17,22 @@ class Page {
    * @param block_size size of a disk block
    */
   explicit Page(int block_size)
-      : byte_buffer_(std::make_unique<char[]>(block_size)), size_(block_size) {}
+      : byte_buffer_(new char[block_size]()),
+        own_memory_(true),
+        size_(block_size) {}
 
   /**
    * @brief Construct a new Page object that gets its memory from another
    * buffer. This constructor is used primarily by the log manager.
-   * @param buffer a unique pointer to the buffer
+   * @param buffer a pointer to the buffer
    * @param size size of a disk block
    */
-  Page(std::unique_ptr<char[]> buffer, int size)
-      : byte_buffer_(std::move(buffer)), size_(size) {}
+  Page(char* buffer, int size) : byte_buffer_(buffer), size_(size) {}
+
+  /**
+   * @brief Destructor. Only deallocate memory if this page owns memory
+   */
+  ~Page();
 
   /**
    * @brief Get an integer from the page at the specified offset
@@ -71,13 +77,26 @@ class Page {
   void SetString(int offset, std::string_view s) noexcept;
 
   /**
+   * @brief Get the length of a string saved at this page
+   * @param str_len length of the string
+   * @return the actual space the string occupies
+   */
+  static int StringLength(std::string_view s) noexcept {
+    return sizeof(int) + s.size() * sizeof(CharSet);
+  }
+
+  /**
    * @brief Retrieves the content of the entire page
    * @return a non-owning view (but modifiable) of the page
    */
   std::span<char> Contents() const noexcept;
 
  private:
-  std::unique_ptr<char[]> byte_buffer_;
+  // Use ASCII as the character encoding for this in-memory page
+  using CharSet = char;
+
+  char* byte_buffer_{};
+  bool own_memory_{};
   int size_{};
 };
 }  // namespace simpledb
