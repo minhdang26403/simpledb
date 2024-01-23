@@ -52,11 +52,14 @@ BlockId FileManager::Append(std::string_view filename) {
   // Write a block of zeroed bytes to the end of the file
   file.write(bytes.get(), block_size_);
   file.flush();
+
   return block;
 }
 
-int FileManager::Length(std::string_view filename) const {
+int FileManager::Length(std::string_view filename) {
+  GetFile(filename);
   fs::path filepath{db_directory_path_ / filename};
+
   return fs::file_size(filepath) / block_size_;
 }
 
@@ -82,6 +85,7 @@ std::fstream& FileManager::GetFile(std::string_view filename) {
     entry->second.open(db_table, std::ios_base::in | std::ios_base::out |
                                      std::ios_base::binary);
   }
+
   return entry->second;
 }
 }  // namespace simpledb

@@ -91,7 +91,7 @@ class FileManager {
    * @param filename the filename to get its number of blocks
    * @return the number of blocks in the file
    */
-  int Length(std::string_view filename) const;
+  int Length(std::string_view filename);
 
   /**
    * @brief Check whether this FileManager object holds a newly created database
