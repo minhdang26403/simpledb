@@ -15,7 +15,7 @@ void FileTest() {
   Page p1{file_manager.BlockSize()};
   std::string s1 = "abcdefghijklm";
   p1.SetString(pos1, s1);
-  int pos2 = pos1 + s1.size() + sizeof(int);
+  int pos2 = pos1 + Page::StringLength(s1);
   p1.SetInt(pos2, 345);
   file_manager.Write(block, p1);
 

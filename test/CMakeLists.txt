@@ -1,3 +1,11 @@
-add_executable(file_test file_test.cpp)
+set(
+  TEST_FILES
+  file_test
+  log_test
+)
 
-target_link_libraries(file_test simpledb)
+foreach(file ${TEST_FILES})
+  add_executable(${file} ${file}.cpp)
+
+  target_link_libraries(${file} simpledb)
+endforeach()
