@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <tuple>
+#include <utility>
 
 namespace simpledb {
 FileManager::FileManager(const fs::path& db_directory_path, int block_size)
@@ -65,26 +66,32 @@ int FileManager::Length(std::string_view filename) {
 
 std::fstream& FileManager::GetFile(std::string_view filename) {
   auto entry = open_files_.find(filename);
-  if (entry == open_files_.end()) {
-    fs::path db_table{db_directory_path_ / filename};
-    // Workaround for std::fstream C++ library
-    // If a file doesn't exist, the std::fstream can't create
-    // a new file as both input/output binary stream
-    // Create the file as output binary stream first
-    open_files_.emplace(
-        std::piecewise_construct, std::forward_as_tuple(filename),
-        std::forward_as_tuple(db_table,
-                              std::ios_base::out | std::ios_base::binary));
-    entry = open_files_.find(filename);
-    if (entry->second.fail() || entry->second.bad()) {
+  if (entry != open_files_.end()) {
+    return entry->second;
+  }
+
+  fs::path db_table{db_directory_path_ / filename};
+  // Workaround for std::fstream C++ library
+  // If a file doesn't exist, the std::fstream can't create
+  // a new file as both input/output binary stream
+  // Create the file as output binary stream first
+  std::fstream file(
+      db_table, std::ios_base::binary | std::ios_base::in | std::ios_base::out);
+
+  if (!file.is_open()) {
+    file.clear();
+    file.open(db_table, std::ios_base::binary | std::ios_base::in |
+                            std::ios_base::out | std::ios_base::trunc);
+    file.close();
+    file.open(db_table, std::ios::binary | std::ios::in | std::ios::out);
+
+    if (!file.is_open()) {
       throw std::runtime_error("Error opening file\n");
     }
-    // Close the file to clear all flags
-    entry->second.close();
-    // Reopen the file as input/output binary stream
-    entry->second.open(db_table, std::ios_base::in | std::ios_base::out |
-                                     std::ios_base::binary);
   }
+  
+  open_files_.emplace(filename, std::move(file));
+  entry = open_files_.find(filename);
 
   return entry->second;
 }
