@@ -1,10 +1,12 @@
 add_subdirectory(file)
 add_subdirectory(log)
 add_subdirectory(server)
+add_subdirectory(buffer)
 
 add_library(simpledb STATIC ${ALL_OBJECT_FILES})
 
 set(SIMPLEDB_LIBS
+  simpledb_buffer
   simpledb_file
   simpledb_log
   simpledb_server
