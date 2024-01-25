@@ -74,14 +74,16 @@ std::fstream& FileManager::GetFile(std::string_view filename) {
   // Workaround for std::fstream C++ library
   // If a file doesn't exist, the std::fstream can't create
   // a new file as both input/output binary stream
-  // Create the file as output binary stream first
   std::fstream file(
       db_table, std::ios_base::binary | std::ios_base::in | std::ios_base::out);
 
   if (!file.is_open()) {
+    // Clear all the error flags
     file.clear();
+    // Re-open the file in the following mode to create the file
     file.open(db_table, std::ios_base::binary | std::ios_base::in |
                             std::ios_base::out | std::ios_base::trunc);
+    // Close and re-open the file with the original mode
     file.close();
     file.open(db_table, std::ios::binary | std::ios::in | std::ios::out);
 
@@ -89,7 +91,7 @@ std::fstream& FileManager::GetFile(std::string_view filename) {
       throw std::runtime_error("Error opening file\n");
     }
   }
-  
+
   open_files_.emplace(filename, std::move(file));
   entry = open_files_.find(filename);
 
