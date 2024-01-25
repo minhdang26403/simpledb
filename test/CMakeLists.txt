@@ -1,5 +1,8 @@
 set(
   TEST_FILES
+  buffer_file_test
+  buffer_manager_test
+  buffer_test
   file_test
   log_test
 )
