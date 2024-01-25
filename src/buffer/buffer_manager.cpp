@@ -47,7 +47,7 @@ Buffer* BufferManager::Pin(const BlockId& block) {
   Buffer* buffer = TryToPin(block);
 
   while (buffer == nullptr && !WaitingTooLong(timestamp)) {
-    cv_.wait(lock);
+    cv_.wait_for(lock, MAX_TIME);
     buffer = TryToPin(block);
   }
 
