@@ -27,19 +27,39 @@ FileManager::FileManager(const fs::path& db_directory_path, int block_size)
 void FileManager::Read(const BlockId& block, const Page& page) {
   std::scoped_lock lock{mutex_};
   std::fstream& file = GetFile(block.Filename());
-  file.seekp(block.BlockNumber() * block_size_, std::ios_base::beg);
+  file.seekg(block.BlockNumber() * block_size_, std::ios_base::beg);
   std::span<char> page_view = page.Contents();
   // Read data from file into the page
   file.read(page_view.data(), page_view.size());
+  // When reading an empty file, end of file condition occurs
+  if (file.fail()) {
+    if (file.rdstate() == (std::ios_base::failbit | std::ios_base::eofbit)) {
+      // Must clear all error flags since (failbit | eofbit) is set when reading
+      // from an empty file
+      file.clear();
+      // Initialize the page with zero to indicate that it is read from an
+      // empty file
+      std::memset(page_view.data(), '\0', page_view.size());
+    } else {
+      throw std::runtime_error(
+          "Got error while reading file");
+    }
+  }
 }
 
 void FileManager::Write(const BlockId& block, const Page& page) {
   std::scoped_lock lock{mutex_};
   std::fstream& file = GetFile(block.Filename());
   file.seekp(block.BlockNumber() * block_size_, std::ios_base::beg);
+  if (file.tellp() == -1) {
+    throw std::runtime_error("A failure occurs to the output file");
+  }
   std::span<char> page_view = page.Contents();
   // Write data from page to the file
   file.write(page_view.data(), page_view.size());
+  if (file.bad()) {
+    throw std::runtime_error("Got non-recoverable error while writing to file");
+  }
   file.flush();
 }
 
@@ -49,9 +69,15 @@ BlockId FileManager::Append(std::string_view filename) {
   BlockId block{filename, new_block_num};
   std::fstream& file = GetFile(block.Filename());
   file.seekp(block.BlockNumber() * block_size_);
+  if (file.tellp() == -1) {
+    throw std::runtime_error("A failure occurs to the output file");
+  }
   auto bytes = std::make_unique<char[]>(block_size_);
   // Write a block of zeroed bytes to the end of the file
   file.write(bytes.get(), block_size_);
+  if (file.bad()) {
+    throw std::runtime_error("Got non-recoverable error while writing to file");
+  }
   file.flush();
 
   return block;
@@ -88,10 +114,12 @@ std::fstream& FileManager::GetFile(std::string_view filename) {
     file.open(db_table, std::ios::binary | std::ios::in | std::ios::out);
 
     if (!file.is_open()) {
-      throw std::runtime_error("Error opening file\n");
+      throw std::runtime_error("Error opening file");
     }
   }
 
+  // std::fstream is a non-copyable type, must move this local file object
+  // for in-place construction
   open_files_.emplace(filename, std::move(file));
   entry = open_files_.find(filename);
 
