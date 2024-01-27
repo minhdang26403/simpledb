@@ -49,7 +49,7 @@ std::string_view Page::GetString(int offset) const noexcept {
 void Page::SetString(int offset, std::string_view s) noexcept {
   // `std::string_view` is a constant view, but `std::span` is a modifiable
   // view. Need to cast away const to construct a `span` object. `SetBytes`
-  // promises not to modify the `string_view` s
+  // promises not to modify the `string_view`
   SetBytes(offset, std::span{const_cast<char*>(s.data()), s.size()});
 }
 

@@ -9,7 +9,7 @@ FileManager::FileManager(const fs::path& db_directory_path, int block_size)
     : db_directory_path_(db_directory_path), block_size_(block_size) {
   is_new_ = !fs::directory_entry{db_directory_path_}.exists();
 
-  // Create the directory to hold the database if the database is new
+  // Create the directory to store the database if it is new
   if (is_new_) {
     fs::create_directories(db_directory_path_);
   }
@@ -41,8 +41,7 @@ void FileManager::Read(const BlockId& block, const Page& page) {
       // empty file
       std::memset(page_view.data(), '\0', page_view.size());
     } else {
-      throw std::runtime_error(
-          "Got error while reading file");
+      throw std::runtime_error("Got error while reading file");
     }
   }
 }
@@ -52,7 +51,7 @@ void FileManager::Write(const BlockId& block, const Page& page) {
   std::fstream& file = GetFile(block.Filename());
   file.seekp(block.BlockNumber() * block_size_, std::ios_base::beg);
   if (file.tellp() == -1) {
-    throw std::runtime_error("A failure occurs to the output file");
+    throw std::runtime_error("A failure occurred to the output file");
   }
   std::span<char> page_view = page.Contents();
   // Write data from page to the file
@@ -68,9 +67,9 @@ BlockId FileManager::Append(std::string_view filename) {
   int new_block_num = Length(filename);
   BlockId block{filename, new_block_num};
   std::fstream& file = GetFile(block.Filename());
-  file.seekp(block.BlockNumber() * block_size_);
+  file.seekp(block.BlockNumber() * block_size_, std::ios_base::beg);
   if (file.tellp() == -1) {
-    throw std::runtime_error("A failure occurs to the output file");
+    throw std::runtime_error("A failure occurred to the output file");
   }
   auto bytes = std::make_unique<char[]>(block_size_);
   // Write a block of zeroed bytes to the end of the file

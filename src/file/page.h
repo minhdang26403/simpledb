@@ -24,7 +24,7 @@ class Page {
   /**
    * @brief Construct a new Page object that gets its memory from another
    * buffer. This constructor is used primarily by the log manager.
-   * @param buffer a pointer to the buffer
+   * @param buffer pointer to the buffer
    * @param size size of a disk block
    */
   Page(char* buffer, int size) : byte_buffer_(buffer), size_(size) {}
@@ -42,7 +42,8 @@ class Page {
   int GetInt(int offset) const noexcept;
 
   /**
-   * @brief Save an integer in the page at the specified offset
+   * @brief Save an integer in the page at the specified offset. Clients of the
+   * `Page` are responsible for knowing what values have been stored where.
    * @param offset the offset to save value at
    * @param num the integer to save
    */
@@ -56,7 +57,8 @@ class Page {
   std::span<char> GetBytes(int offset) const noexcept;
 
   /**
-   * @brief Save a blob in the page at the specified offset
+   * @brief Save a blob in the page at the specified offset. Clients of the
+   * `Page` are responsible for knowing what values have been stored where.
    * @param offset the offset to save value at
    * @param bytes the blob to save
    */
@@ -70,14 +72,15 @@ class Page {
   std::string_view GetString(int offset) const noexcept;
 
   /**
-   * @brief Save a string in the page at the specified offset
+   * @brief Save a string in the page at the specified offset. Clients of the
+   * `Page` are responsible for knowing what values have been stored where.
    * @param offset the offset to save value at
    * @param s the string to save
    */
   void SetString(int offset, std::string_view s) noexcept;
 
   /**
-   * @brief Get the length of a string saved at this page
+   * @brief Get the number of bytes that a string actually occupies in a page
    * @param str_len length of the string
    * @return the actual space the string occupies
    */
@@ -86,13 +89,13 @@ class Page {
   }
 
   /**
-   * @brief Retrieves the content of the entire page
+   * @brief Retrieve the content of the entire page
    * @return a non-owning view (but modifiable) of the page
    */
   std::span<char> Contents() const noexcept;
 
  private:
-  // Use ASCII as the character encoding for this in-memory page
+  // Use ASCII as the character encoding scheme for this in-memory page
   using CharSet = char;
 
   char* byte_buffer_{};

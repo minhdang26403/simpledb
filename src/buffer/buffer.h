@@ -35,7 +35,7 @@ class Buffer {
 
   /**
    * @brief Return a `BlockId` object that represents a reference to the disk
-   * block allocated to the buffer.
+   * block allocated to the buffer
    * @return an optional `BlockId` object (this buffer may or may not be
    * pinned to any disk block)
    */
@@ -43,14 +43,14 @@ class Buffer {
 
   /**
    * @brief Set the transaction id and the log sequence number to indicate
-   * that the page that this buffer holds has been modified.
+   * that the page that this buffer holds has been modified
    * @param txn_id transaction id
    * @param lsn log sequence number
    */
   void SetModified(int txn_id, int lsn) noexcept;
 
   /**
-   * @brief Return true if the buffer is currently pinned
+   * @brief Return whether the buffer is currently pinned
    * @return true if the buffer is pinned; otherwise, false
    */
   bool IsPinned() const noexcept { return pin_count_ > 0; }
@@ -70,7 +70,7 @@ class Buffer {
   void AssignToBlock(const BlockId& block);
 
   /**
-   * @brief Write the buffer to its disk block if it is dirty.
+   * @brief Write the buffer to its disk block if it is dirty
    */
   void Flush();
 

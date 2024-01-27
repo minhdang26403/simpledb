@@ -27,13 +27,13 @@ class BufferManager {
                 int num_buffs);
 
   /**
-   * @brief Return the number of available (i.e. unpinned) buffers.
+   * @brief Return the number of available (i.e. unpinned) buffers
    * @return the number of available buffers
    */
   int Available() const;
 
   /**
-   * @brief Flush the dirty buffers modified by the specified transaction.
+   * @brief Flush the dirty buffers modified by the specified transaction
    * @param txn_id id of the modifying transaction
    */
   void FlushAll(int txn_id);
@@ -41,7 +41,7 @@ class BufferManager {
   /**
    * @brief Unpin the specified data buffer. If its pin count goes to zero, then
    * notify any waiting threads.
-   * @param buffer the buffer to be unpinned
+   * @param buffer the buffer to unpin
    */
   void Unpin(Buffer* buffer);
 

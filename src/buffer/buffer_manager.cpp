@@ -98,5 +98,4 @@ Buffer* BufferManager::ChooseUnpinnedBuffer() noexcept {
 
   return nullptr;
 }
-
 }  // namespace simpledb

@@ -27,7 +27,7 @@ class LogManager {
   LogManager(FileManager& file_manager, std::string_view log_file);
 
   /**
-   * @brief Ensures that the log record corresponding to the specified LSN has
+   * @brief Ensure that the log record corresponding to the specified LSN has
    * been written to disk. All earlier log records will also be written to disk.
    * @param lsn the LSN of a log record
    */
@@ -35,7 +35,7 @@ class LogManager {
 
   /**
    * @brief Get a log iterator to traverse through log records in the current
-   * block.
+   * block
    * @return an iterator to the most recent log record of the current block
    */
   LogIterator Iterator();
@@ -54,13 +54,13 @@ class LogManager {
 
  private:
   /**
-   * @brief Extend the log file by allocating a new empty disk block.
+   * @brief Extend the log file by allocating a new empty disk block
    * @return a newly allocated block
    */
   BlockId AppendNewBlock();
 
   /**
-   * @brief Flush the in-memory page to the log file.
+   * @brief Flush the in-memory page to the log file
    */
   void Flush();
 

@@ -34,7 +34,7 @@ LogIterator LogManager::Iterator() {
 }
 
 int LogManager::Append(std::span<char> log_record) {
-  std::scoped_lock lock(mutex_);
+  std::scoped_lock lock{mutex_};
   int boundary = log_page_.GetInt(0);
   int record_size = log_record.size();
   int len_size = sizeof(int);

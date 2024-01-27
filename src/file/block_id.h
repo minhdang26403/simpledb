@@ -16,17 +16,16 @@ class BlockId {
   BlockId() = default;
 
   /**
-   * @brief Constructs a BlockId object
+   * @brief Construct a BlockId object
    * @param filename name of the file that this block refers to
    * @param block_num logical block number within the file
    */
   BlockId(std::string_view filename, int block_num)
       : filename_(filename), block_num_(block_num) {}
 
-  // TODO(DANG): string or string_view
   /**
-   * @brief Retrieves the file name to which this block belongs
-   * @return a non-owning view of the file name
+   * @brief Retrieve the filename to which this block belongs
+   * @return a non-owning view of the filename
    */
   std::string_view Filename() const noexcept {
     // TODO(DANG): return string or string_view?
@@ -34,7 +33,7 @@ class BlockId {
   }
 
   /**
-   * @brief Retrieves the logical block number of this block within the file
+   * @brief Retrieve the logical block number of this block within the file
    * @return logical block number
    */
   int BlockNumber() const noexcept { return block_num_; }
@@ -47,21 +46,21 @@ class BlockId {
   bool Equals(const BlockId& other) const noexcept;
 
   /**
-   * @brief Gets the string representation of a BlockId object for debugging
+   * @brief Get the string representation of a BlockId object for debugging
    * @return a string representation of this block
    */
   std::string ToString() const;
 
   /**
    * @brief Operator overloading for comparing two BlockId objects
-   * @param other the other to compare
+   * @param other the other block to compare
    * @return true if two blocks are the same; otherwise, false
    */
   bool operator==(const BlockId& other) const noexcept;
 
   /**
    * @brief Operator overloading for comparing two BlockId objects
-   * @param other the other compare
+   * @param other the other block compare
    * @return true if two blocks are different; otherwise, false
    */
   bool operator!=(const BlockId& other) const noexcept;

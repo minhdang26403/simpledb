@@ -22,5 +22,4 @@ void Buffer::Flush() {
     txn_id_ = -1;
   }
 }
-
 }  // namespace simpledb

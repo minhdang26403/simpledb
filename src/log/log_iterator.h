@@ -15,7 +15,7 @@ class LogIterator {
  public:
   /**
    * @brief Create an iterator for the records in the log file, positioned after
-   * the last log record.
+   * the last log record
    * @param file_manager file manager of the database engine
    * @param block the disk block that this iterator traverses on
    */
@@ -23,7 +23,7 @@ class LogIterator {
 
   /**
    * @brief Determine if the current log record is the earliest record in the
-   * log file.
+   * log file
    * @return true if there is an earlier record; otherwise, false
    */
   bool HasNext() const noexcept {
@@ -41,7 +41,7 @@ class LogIterator {
  private:
   /**
    * @brief Move to the specified log block and position it at the first record
-   * in that block (i.e., the most recent one).
+   * in that block (i.e., the most recent one)
    * @param block the block to move to
    */
   void MoveToBlock(const BlockId& block);

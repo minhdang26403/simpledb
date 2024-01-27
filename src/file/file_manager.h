@@ -59,7 +59,7 @@ class FileManager {
  public:
   /**
    * @brief Construct a new File Manager object.
-   * @param db_directory path to the directory containing the database
+   * @param db_directory path to the directory that store files of the database
    * @param block_size size of a disk block
    */
   FileManager(const fs::path& db_directory, int block_size);
@@ -68,16 +68,16 @@ class FileManager {
    * @brief Read the contents of the specified block into the specified
    * page.
    * @param block the block to read from
-   * @param p the page to read to
+   * @param page the page to read to
    */
-  void Read(const BlockId& block, const Page& p);
+  void Read(const BlockId& block, const Page& page);
 
   /**
    * @brief Write the contents of a page to the specified block
    * @param block the block to write to
-   * @param p the page to write from
+   * @param page the page to write from
    */
-  void Write(const BlockId& block, const Page& p);
+  void Write(const BlockId& block, const Page& page);
 
   /**
    * @brief Extend a file with a block of zeroed bytes
@@ -87,7 +87,7 @@ class FileManager {
   BlockId Append(std::string_view filename);
 
   /**
-   * @brief Calculate how many blocks does a file contain
+   * @brief Get the number of blocks of a file
    * @param filename the filename to get its number of blocks
    * @return the number of blocks in the file
    */
