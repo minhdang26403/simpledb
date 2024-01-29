@@ -1,4 +1,5 @@
 #include "file/block_id.h"
+#include <sstream>
 
 namespace simpledb {
 bool BlockId::Equals(const BlockId& other) const noexcept {
@@ -6,13 +7,10 @@ bool BlockId::Equals(const BlockId& other) const noexcept {
 }
 
 std::string BlockId::ToString() const {
-  std::string output = "[file ";
-  output.append(Filename());
-  output.append(", block ");
-  output.append(std::to_string(BlockNumber()));
-  output.append("]");
+  std::stringstream output;
+  output << "[file " << Filename() << ", block " << BlockNumber() << ']';
 
-  return output;
+  return output.str();
 }
 
 bool BlockId::operator==(const BlockId& other) const noexcept {

@@ -54,6 +54,6 @@ void Page::SetString(int offset, std::string_view s) noexcept {
 }
 
 std::span<char> Page::Contents() const noexcept {
-  return std::span{byte_buffer_, static_cast<size_t>(size_)};
+  return std::span{byte_buffer_, size_};
 }
 }  // namespace simpledb

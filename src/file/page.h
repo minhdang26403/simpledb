@@ -27,7 +27,7 @@ class Page {
    * @param buffer pointer to the buffer
    * @param size size of a disk block
    */
-  Page(char* buffer, int size) : byte_buffer_(buffer), size_(size) {}
+  Page(char* buffer, size_t size) : byte_buffer_(buffer), size_(size) {}
 
   /**
    * @brief Destructor. Only deallocate memory if this page owns memory
@@ -100,6 +100,6 @@ class Page {
 
   char* byte_buffer_{};
   bool own_memory_{};
-  int size_{};
+  size_t size_{};
 };
 }  // namespace simpledb

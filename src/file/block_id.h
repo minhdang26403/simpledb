@@ -1,9 +1,11 @@
 #pragma once
 
+#include <functional>
 #include <string>
 #include <string_view>
 
 namespace simpledb {
+
 /**
  * A BlockId object identifies a specific physical block by its file name and
  * logical block number
@@ -69,4 +71,15 @@ class BlockId {
   std::string filename_;  // TODO(DANG): string copy or reference
   int block_num_{};
 };
+
 }  // namespace simpledb
+
+template <>
+struct std::hash<simpledb::BlockId> {
+  size_t operator()(const simpledb::BlockId& block) const noexcept {
+    size_t h1 = std::hash<std::string_view>{}(block.Filename());
+    size_t h2 = std::hash<int>{}(block.BlockNumber());
+
+    return h1 ^ (h2 << 1);
+  }
+};
