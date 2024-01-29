@@ -16,7 +16,7 @@ void PrintLogRecords(LogManager& log_manager, std::string_view msg) {
 
   while (iter.HasNext()) {
     std::span<char> record = iter.Next();
-    Page page{record.data(), static_cast<int>(record.size())};
+    Page page{record.data(), record.size()};
     std::string s{page.GetString(0)};
     int npos = Page::StringLength(s);
     int val = page.GetInt(npos);
@@ -30,7 +30,7 @@ std::vector<char> CreateLogRecord(std::string_view str, int num) {
   int str_pos = 0;
   int num_pos = Page::StringLength(str);
   std::vector<char> record(num_pos + sizeof(int));
-  Page page{record.data(), static_cast<int>(record.size())};
+  Page page{record.data(), record.size()};
   page.SetString(str_pos, str);
   page.SetInt(num_pos, num);
 
