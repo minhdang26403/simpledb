@@ -5,10 +5,10 @@
 ## Implementation Plan
 
 - [x] File Manager
-- Log Manager
-- Buffer Manager
-- Concurrency Manager
+- [x] Log Manager
+- [x] Buffer Manager
 - Recovery Manager
+- Concurrency Manager
 - Transaction
 - Record Manager
 - Metadata Manager
@@ -20,6 +20,15 @@
 - Materialization and Sorting
 - MultiBuffer Sorting/Product
 - Query Optimization
+
+## Optimization Plan
+- Log Manager:
+  + Log Manager and Log Iterator currently allocate their own memory page, change the implementation to use buffers from the buffer pool instead
+- Buffer Manager:
+  + Keep a mapping from each block to the buffer holding that block (instead of a sequential scan)
+  + Use a more clever buffer replacement strategy
+- Recovery Manager:
+  + The recovery algorithm does not look at the current state of the database, making substantial number of unnecessary disk writes if the database is large
 
 ## Build
 
