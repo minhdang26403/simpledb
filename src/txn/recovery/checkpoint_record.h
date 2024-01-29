@@ -38,7 +38,8 @@ class CheckpointRecord : public LogRecord {
   std::string ToString() const noexcept { return "<CHECKPOINT>"; }
 
   /**
-   * @brief Write this CHECKPOINT record to the log
+   * @brief Write this CHECKPOINT record to the log. This log record contains
+   * the CHECKPOINT operator and nothing else.
    * @param log_manager log manager of the database engine
    * @return LSN of the last log value
    */

@@ -22,12 +22,12 @@ std::string CommitRecord::ToString() const {
   return output.str();
 }
 
-int CommitRecord::WriteToLog(LogManager& log_manager) {
+int CommitRecord::WriteToLog(LogManager& log_manager, int txn_id) {
   size_t record_size = 2 * sizeof(int);
   auto record = std::make_unique<char[]>(record_size);
   Page page{record.get(), record_size};
   page.SetInt(0, static_cast<int>(LogType::COMMIT));
-  page.SetInt(sizeof(int), txn_id_);
+  page.SetInt(sizeof(int), txn_id);
 
   return log_manager.Append(std::span{record.get(), record_size});
 }

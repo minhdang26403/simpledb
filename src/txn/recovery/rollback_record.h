@@ -44,11 +44,13 @@ class RollbackRecord : public LogRecord {
   std::string ToString() const;
 
   /**
-   * @brief Write this ROLLBACK record to the log
+   * @brief Write this ROLLBACK record to the log. This log record contains the
+   * ROLLBACK operator, followed by the transaction id.
    * @param log_manager log manager of the database engine
-   * @return the LSN of the last log value
+   * @param txn_id transaction id
+   * @return LSN of the last log value
    */
-  int WriteToLog(LogManager& log_manager);
+  static int WriteToLog(LogManager& log_manager, int txn_id);
 
  private:
   int txn_id_;

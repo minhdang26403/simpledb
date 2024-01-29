@@ -40,7 +40,7 @@ class LogRecord {
    * @brief Undo the operation encoded by this log record. The only log record
    * types for which this method does anything interesting are SETINT and
    * SETSTRING. 
-   * @param txn the transaction that is performing the undo
+   * @param txn the transaction to undo
    */
   virtual void Undo([[maybe_unused]] Transaction& txn) = 0;
 

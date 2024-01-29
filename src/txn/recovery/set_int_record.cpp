@@ -36,10 +36,11 @@ void SetIntRecord::Undo(Transaction& txn) {
   txn.Unpin(block_);
 }
 
-int SetIntRecord::WriteToLog(LogManager& log_manager) {
+int SetIntRecord::WriteToLog(LogManager& log_manager, int txn_id,
+                             const BlockId& block, int offset, int val) {
   int txn_pos = sizeof(int);
   int file_pos = txn_pos + sizeof(int);
-  int block_pos = file_pos + Page::StringLength(block_.Filename());
+  int block_pos = file_pos + Page::StringLength(block.Filename());
   int offset_pos = block_pos + sizeof(int);
   int val_pos = offset_pos + sizeof(int);
 
@@ -47,11 +48,11 @@ int SetIntRecord::WriteToLog(LogManager& log_manager) {
   auto record = std::make_unique<char[]>(record_size);
   Page page{record.get(), record_size};
   page.SetInt(0, static_cast<int>(LogType::SETINT));
-  page.SetInt(txn_pos, txn_id_);
-  page.SetString(file_pos, block_.Filename());
-  page.SetInt(block_pos, block_.BlockNumber());
-  page.SetInt(offset_pos, offset_);
-  page.SetInt(val_pos, val_);
+  page.SetInt(txn_pos, txn_id);
+  page.SetString(file_pos, block.Filename());
+  page.SetInt(block_pos, block.BlockNumber());
+  page.SetInt(offset_pos, offset);
+  page.SetInt(val_pos, val);
 
   return log_manager.Append(std::span{record.get(), record_size});
 }

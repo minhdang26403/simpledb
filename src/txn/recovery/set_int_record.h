@@ -47,11 +47,18 @@ class SetIntRecord : public LogRecord {
   std::string ToString() const;
 
   /**
-   * @brief Write this record to the log
+   * @brief Write this SETINT record to the log. This log record contains the
+   * SETINT operator, followed by the transaction id, filename, block number,
+   * offset within the block, and the previous integer value at that offset.
    * @param log_manager log manager of the database engine
-   * @return the LSN of the last log value
+   * @param txn_id transaction id
+   * @param block a reference to the disk block
+   * @param offset offset in the block
+   * @param val old value at the specified offset
+   * @return LSN of the last log value
    */
-  int WriteToLog(LogManager& log_manager);
+  static int WriteToLog(LogManager& log_manager, int txn_id,
+                        const BlockId& block, int offset, int val);
 
  private:
   int txn_id_{};
