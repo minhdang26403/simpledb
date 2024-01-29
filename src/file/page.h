@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include <span>
+#include <span>  // NOLINT(build/include_order)
 #include <string_view>
 #include <utility>
 

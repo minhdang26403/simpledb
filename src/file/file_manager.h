@@ -3,7 +3,7 @@
 #include <filesystem>
 #include <fstream>
 #include <functional>
-#include <mutex>
+#include <mutex>  // NOLINT(build/c++11)
 #include <string>
 #include <string_view>
 #include <unordered_map>

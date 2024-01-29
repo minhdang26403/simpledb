@@ -1,7 +1,7 @@
 #include "txn/recovery/commit_record.h"
 
 #include <memory>
-#include <span>
+#include <span>  // NOLINT(build/include_order)
 #include <sstream>
 #include <string>
 

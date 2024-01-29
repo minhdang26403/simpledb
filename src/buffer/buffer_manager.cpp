@@ -1,7 +1,7 @@
 #include "buffer/buffer_manager.h"
 
-#include <chrono>
-#include <mutex>
+#include <chrono>  // NOLINT(build/c++11)
+#include <mutex>   // NOLINT(build/c++11)
 #include <optional>
 
 #include "file/block_id.h"

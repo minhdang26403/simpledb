@@ -1,8 +1,8 @@
 #pragma once
 
-#include <chrono>
-#include <condition_variable>
-#include <mutex>
+#include <chrono>  // NOLINT(build/c++11)
+#include <condition_variable>  // NOLINT(build/c++11)
+#include <mutex>  // NOLINT(build/c++11)
 #include <vector>
 
 #include "buffer/buffer.h"
@@ -11,7 +11,7 @@
 #include "log/log_manager.h"
 
 namespace simpledb {
-using namespace std::chrono;
+using namespace std::chrono;  // NOLINT(build/namespaces)
 /**
  * Manage the pinning and unpinning of buffers to blocks.
  */

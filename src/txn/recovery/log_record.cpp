@@ -1,7 +1,7 @@
 #include "txn/recovery/log_record.h"
 
 #include <memory>
-#include <span>
+#include <span>  // NOLINT(build/include_order)
 
 #include "file/page.h"
 #include "txn/recovery/checkpoint_record.h"

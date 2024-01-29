@@ -1,7 +1,7 @@
 #pragma once
 
-#include <mutex>
-#include <span>
+#include <mutex>  // NOLINT(build/c++11)
+#include <span>   // NOLINT(build/include_order)
 #include <string>
 #include <string_view>
 
