@@ -1,5 +1,5 @@
 #include <iostream>
-#include <span>
+#include <span>  // NOLINT(build/include_order)
 #include <string>
 #include <string_view>
 
