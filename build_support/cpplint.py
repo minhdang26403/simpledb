@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3 -W ignore::DeprecationWarning
 #
 # Copyright (c) 2009 Google Inc. All rights reserved.
 #
