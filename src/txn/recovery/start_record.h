@@ -42,10 +42,11 @@ class StartRecord : public LogRecord {
   std::string ToString() const;
 
   /**
-   * @brief Write a SETINT record to the log
-   * @return the LSN of the last log value
+   * @brief Write a START record to the log. This log record contains the START
+   * operator, followed by the transaction id.
+   * @return LSN of the last log value
    */
-  int WriteToLog(LogManager& log_manager);
+  static int WriteToLog(LogManager& log_manager, int txn_id);
 
  private:
   int txn_id_{};

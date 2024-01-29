@@ -4,6 +4,7 @@ add_library(
   checkpoint_record.cpp
   commit_record.cpp
   log_record.cpp
+  recovery_manager.cpp
   rollback_record.cpp
   set_int_record.cpp
   set_string_record.cpp
