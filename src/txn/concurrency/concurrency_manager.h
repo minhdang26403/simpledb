@@ -1,5 +1,8 @@
 #pragma once
 
+#include <string>
+#include <unordered_map>
+
 #include "txn/concurrency/lock_table.h"
 
 namespace simpledb {

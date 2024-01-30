@@ -1,9 +1,9 @@
 #pragma once
 
-#include <chrono>
-#include <condition_variable>
+#include <chrono>              // NOLINT(build/c++11)
+#include <condition_variable>  // NOLINT(build/c++11)
 #include <exception>
-#include <mutex>
+#include <mutex>  // NOLINT(build/c++11)
 #include <unordered_map>
 
 #include "file/block_id.h"
