@@ -12,6 +12,7 @@ set(SIMPLEDB_LIBS
   simpledb_log
   simpledb_server
   simpledb_txn
+  simpledb_txn_concurrency
   simpledb_txn_recovery
 )
 
