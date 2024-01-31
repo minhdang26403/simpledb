@@ -1,12 +1,14 @@
 #pragma once
 
+#include "buffer/buffer.h"
 #include "buffer/buffer_manager.h"
 #include "log/log_manager.h"
-#include "txn/recovery/commit_record.h"
-#include "txn/recovery/start_record.h"
-#include "txn/transaction.h"
+// #include "txn/transaction.h"
 
 namespace simpledb {
+// Forward declaration to avoid cyclic dependency between `RecoveryManger` and
+// `Transaction`
+class Transaction;
 /**
  * The recovery manager. Each transaction has its own recovery manager.
  */
@@ -23,12 +25,14 @@ class RecoveryManager {
                   BufferManager& buffer_manager);
 
   /**
-   * @brief Write a COMMIT record to the log and flush it to disk
+   * @brief Commit the transaction, write a COMMIT record to the log, and flush
+   * it to disk
    */
   void Commit();
 
   /**
-   * @brief Write a ROLLBACK record to the log and flush it to disk
+   * @brief Rollback the transaction, write a ROLLBACK record to the log and
+   * flush it to disk
    */
   void Rollback();
 

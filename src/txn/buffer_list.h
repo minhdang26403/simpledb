@@ -13,11 +13,12 @@ namespace simpledb {
 class BufferList {
  public:
   /**
-   * @brief Construct a new Buffer List object that holds the transaction's
+   * @brief Construct a new buffer list that holds the transaction's
    * currently-pinned buffers
    * @param buffer_manager buffer manager of the database engine
    */
-  explicit BufferList(BufferManager& buffer_manager) : buffer_manager_(buffer_manager) {}
+  explicit BufferList(BufferManager& buffer_manager)
+      : buffer_manager_(buffer_manager) {}
 
   /**
    * @brief Return the buffer pinned to the specified block. The method returns
@@ -25,7 +26,7 @@ class BufferList {
    * @param block a reference to the disk block
    * @return the buffer pinned to that block
    */
-  Buffer* GetBuffer(const BlockId& block) const;
+  Buffer* GetBuffer(const BlockId& block) const noexcept;
 
   /**
    * @brief Pin the block and keep track of the buffer internally

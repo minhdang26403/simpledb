@@ -1,7 +1,7 @@
 #pragma once
 
-#include <span>
 #include <memory>
+#include <span>  // NOLINT(build/include_order)
 
 #include "txn/transaction.h"
 
@@ -39,7 +39,7 @@ class LogRecord {
   /**
    * @brief Undo the operation encoded by this log record. The only log record
    * types for which this method does anything interesting are SETINT and
-   * SETSTRING. 
+   * SETSTRING.
    * @param txn the transaction to undo
    */
   virtual void Undo([[maybe_unused]] Transaction& txn) = 0;

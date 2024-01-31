@@ -6,7 +6,7 @@
 #include "file/block_id.h"
 
 namespace simpledb {
-Buffer* BufferList::GetBuffer(const BlockId& block) const {
+Buffer* BufferList::GetBuffer(const BlockId& block) const noexcept {
   if (!buffers_.contains(block)) {
     return nullptr;
   }
@@ -25,6 +25,7 @@ void BufferList::Pin(const BlockId& block) {
 void BufferList::Unpin(const BlockId& block) {
   Buffer* buffer = buffers_.at(block);
   buffer_manager_.Unpin(buffer);
+  buffers_.erase(block);
 }
 
 void BufferList::UnpinAll() {
