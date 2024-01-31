@@ -5,6 +5,7 @@
 #include "file/page.h"
 #include "log/log_manager.h"
 #include "txn/recovery/log_record.h"
+#include "txn/transaction.h"
 
 namespace simpledb {
 /**
@@ -35,7 +36,7 @@ class StartRecord : public LogRecord {
    * @brief Do nothing because a START record contains no undo information
    * @param txn the transaction to undo
    */
-  void Undo(Transaction& txn) override;
+  void Undo([[maybe_unused]] Transaction& txn) override {}
 
   /**
    * @brief Return the string representation of this START log record
