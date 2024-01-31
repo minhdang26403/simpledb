@@ -7,9 +7,9 @@
 - [x] File Manager
 - [x] Log Manager
 - [x] Buffer Manager
-- Recovery Manager
-- Concurrency Manager
-- Transaction
+- [x] Recovery Manager
+- [x] Concurrency Manager
+- [x] Transaction
 - Record Manager
 - Metadata Manager
 - Select Scans, Project Scans, Product Scans

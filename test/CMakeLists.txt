@@ -5,6 +5,9 @@ set(
   buffer_test
   file_test
   log_test
+  recovery_test
+  concurrency_test
+  transaction_test
 )
 
 foreach(file ${TEST_FILES})
