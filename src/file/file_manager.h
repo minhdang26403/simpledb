@@ -2,54 +2,16 @@
 
 #include <filesystem>
 #include <fstream>
-#include <functional>
 #include <mutex>  // NOLINT(build/c++11)
 #include <string>
 #include <string_view>
-#include <unordered_map>
 
 #include "file/block_id.h"
 #include "file/page.h"
+#include "utils/data_type.h"
 
 namespace simpledb {
 namespace fs = std::filesystem;
-
-/**
- * Our own version of hash function object to support heterogeneous key lookup
- * for `std::unordered_map`
- */
-struct string_hash {
-  // need to define the `is_transparent` type to support heterogeneous key
-  // lookup
-  using is_transparent = void;
-
-  /**
-   * @brief Hash a string literal
-   * @param s the string literal to hash
-   * @return the hash value of this string
-   */
-  [[nodiscard]] size_t operator()(const char* s) const {
-    return std::hash<std::string_view>{}(s);
-  }
-
-  /**
-   * @brief Hash a string view
-   * @param s the string view to hash
-   * @return the hash value of this stirng
-   */
-  [[nodiscard]] size_t operator()(std::string_view s) const {
-    return std::hash<std::string_view>{}(s);
-  }
-
-  /**
-   * @brief Hash a string object
-   * @param s the string object to hash
-   * @return the hash value of this string
-   */
-  [[nodiscard]] size_t operator()(const std::string& s) const {
-    return std::hash<std::string>{}(s);
-  }
-};
 
 /**
  * The File Manager handles the actual interaction with the OS file system. It
@@ -116,7 +78,7 @@ class FileManager {
   fs::path db_directory_path_;
   int block_size_{};
   bool is_new_{};
-  std::unordered_map<std::string, std::fstream, string_hash, std::equal_to<>>
+  HashMap<std::string, std::fstream>
       open_files_;    // a table of open files in the database
   std::mutex mutex_;  // mutex to make FileManager thread-safe
 };
