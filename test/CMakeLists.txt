@@ -3,10 +3,12 @@ set(
   buffer_file_test
   buffer_manager_test
   buffer_test
-  file_test
-  log_test
-  recovery_test
   concurrency_test
+  file_test
+  layout_test
+  log_test
+  record_test
+  recovery_test
   transaction_test
 )
 
