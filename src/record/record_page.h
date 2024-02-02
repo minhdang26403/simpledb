@@ -16,7 +16,9 @@ class RecordPage {
    * @param layout the layout of records stored in this record page
    */
   RecordPage(Transaction& txn, BlockId block, Layout& layout)
-      : txn_(txn), block_(block), layout_(layout) {}
+      : txn_(txn), block_(block), layout_(layout) {
+    txn_.Pin(block_);
+  }
 
   /**
    * @brief Return the integer value stored for the specified field of the

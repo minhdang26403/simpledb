@@ -9,6 +9,7 @@ set(
   log_test
   record_test
   recovery_test
+  table_scan_test
   transaction_test
 )
 

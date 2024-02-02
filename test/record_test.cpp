@@ -47,7 +47,7 @@ void RecordTest() {
     }
     slot = record_page.NextAfter(slot);
   }
-  std::cout << count << " values under 25 were deleted.\n";
+  std::cout << count << " values under 25 were deleted.\n\n";
 
   std::cout << "Here are the remaining records.\n";
   slot = record_page.NextAfter(-1);
