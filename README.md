@@ -10,7 +10,8 @@
 - [x] Recovery Manager
 - [x] Concurrency Manager
 - [x] Transaction
-- Record Manager
+- [x] Schema, Layout
+- [x] Record Page, Table Scans 
 - Metadata Manager
 - Select Scans, Project Scans, Product Scans
 - Parser

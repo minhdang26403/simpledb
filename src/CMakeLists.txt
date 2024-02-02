@@ -1,6 +1,7 @@
 add_subdirectory(buffer)
 add_subdirectory(file)
 add_subdirectory(log)
+add_subdirectory(record)
 add_subdirectory(server)
 add_subdirectory(txn)
 
