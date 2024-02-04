@@ -1,6 +1,7 @@
 #include "record/table_scan.h"
 
 #include <iostream>
+#include <utility>
 
 #include "record/layout.h"
 #include "record/schema.h"
@@ -16,7 +17,7 @@ void TableScanTest() {
   Schema schema;
   schema.AddIntField("A");
   schema.AddStringField("B", 9);
-  Layout layout{schema};
+  Layout layout{std::move(schema)};
 
   for (const auto& field_name : layout.GetSchema().Fields()) {
     int offset = layout.GetOffset(field_name);

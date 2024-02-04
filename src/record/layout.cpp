@@ -1,9 +1,15 @@
 #include "record/layout.h"
 
+#include <utility>
+
 namespace simpledb {
-Layout::Layout(Schema& schema) : schema_(schema) {
+Layout::Layout(const Schema& schema) : schema_(schema) { CreateLayout(); }
+
+Layout::Layout(Schema&& schema) : schema_(std::move(schema)) { CreateLayout(); }
+
+void Layout::CreateLayout() {
   int pos = sizeof(int);  // leave space for the empty/inuse flag
-  for (const auto& field_name : schema.Fields()) {
+  for (const auto& field_name : schema_.Fields()) {
     offsets_.emplace(field_name, pos);
     pos += LengthInBytes(field_name);
   }

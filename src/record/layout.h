@@ -18,7 +18,15 @@ class Layout {
    * offset of each field within each record.
    * @param schema schema of the table's records
    */
-  explicit Layout(Schema& schema);
+  explicit Layout(const Schema& schema);
+
+  /**
+   * @brief This constructor creates a Layout object from a schema. This
+   * constructor is used when a table is created. It determines the physical
+   * offset of each field within each record.
+   * @param schema schema of the table's records
+   */
+  explicit Layout(Schema&& schema);
 
   /**
    * @brief Create a Layout object from the specified metadata. This constructor
@@ -27,7 +35,7 @@ class Layout {
    * @param offsets the already-calculated offsets of the fields within a record
    * @param slot_size the already-calculated length of each record
    */
-  Layout(Schema& schema, const HashMap<std::string, int>& offsets,
+  Layout(const Schema& schema, const HashMap<std::string, int>& offsets,
          int slot_size)
       : schema_(schema), offsets_(offsets), slot_size_(slot_size) {}
 
@@ -58,7 +66,13 @@ class Layout {
    */
   int LengthInBytes(std::string_view field_name) const;
 
-  Schema& schema_;
+  /**
+   * @brief Initialize a hash map that maps each field name to its corresponding
+   * offset
+   */
+  void CreateLayout();
+
+  Schema schema_;
   HashMap<std::string, int> offsets_;
   int slot_size_{};
 };

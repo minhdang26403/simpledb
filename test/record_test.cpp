@@ -1,4 +1,5 @@
 #include <iostream>
+#include <utility>
 
 #include "record/record_page.h"
 #include "server/simpledb.h"
@@ -12,7 +13,7 @@ void RecordTest() {
   Schema schema;
   schema.AddIntField("A");
   schema.AddStringField("B", 9);
-  Layout layout{schema};
+  Layout layout{std::move(schema)};
   for (const auto& field_name : layout.GetSchema().Fields()) {
     int offset = layout.GetOffset(field_name);
     std::cout << field_name << " has offset " << offset << '\n';
