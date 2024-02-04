@@ -16,13 +16,13 @@ class Constant {
    * @brief Construct an integer constant
    * @param ival value of the integer
    */
-  Constant(int ival) : val_(ival) {}
+  explicit Constant(int ival) : val_(ival) {}
 
   /**
    * @brief Construct a string constant
    * @param sval value of the string
    */
-  Constant(std::string_view sval) : val_(std::in_place_index<1>, sval) {}
+  explicit Constant(std::string_view sval) : val_(std::in_place_index<1>, sval) {}
 
   /**
    * @brief Evaluate the constant as an integer

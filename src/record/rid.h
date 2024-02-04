@@ -1,4 +1,5 @@
 #include <sstream>
+#include <string>
 
 namespace simpledb {
 /**
