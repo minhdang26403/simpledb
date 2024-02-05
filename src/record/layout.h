@@ -56,8 +56,8 @@ class Layout {
   int GetOffset(std::string_view field_name) const;
 
   /**
-   * @brief Return the size of a slot (in bytes)
-   * @return size of a slot
+   * @brief Return the size of a record (in bytes)
+   * @return size of a record
    */
   int SlotSize() const noexcept { return slot_size_; }
 
@@ -71,7 +71,7 @@ class Layout {
 
   /**
    * @brief Initialize a hash map that maps each field name to its corresponding
-   * offset
+   * offset within a record
    */
   void CreateLayout();
 

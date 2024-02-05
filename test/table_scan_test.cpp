@@ -11,8 +11,7 @@
 namespace simpledb {
 void TableScanTest() {
   SimpleDB db{"tabletest", 400, 8};
-  Transaction txn{db.GetFileManager(), db.GetLogManager(),
-                  db.GetBufferManager()};
+  Transaction txn = db.NewTxn();
 
   Schema schema;
   schema.AddIntField("A");

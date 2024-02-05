@@ -5,6 +5,7 @@
 #include "buffer/buffer_manager.h"
 #include "file/file_manager.h"
 #include "log/log_manager.h"
+#include "txn/transaction.h"
 
 namespace simpledb {
 /**
@@ -27,6 +28,13 @@ class SimpleDB {
   explicit SimpleDB(std::string_view dirname);
 
   /**
+   * @brief A convenient way for clients to create transactions and access the
+   * metadata
+   * @return a new transaction
+   */
+  Transaction NewTxn() noexcept;
+
+  /**
    * @brief Get the file manager
    * @return a reference to the file manager
    */
@@ -42,9 +50,7 @@ class SimpleDB {
    * @brief Get the buffer manager
    * @return a reference to the buffer manager
    */
-  BufferManager& GetBufferManager() noexcept {
-    return buffer_manager_;
-  }
+  BufferManager& GetBufferManager() noexcept { return buffer_manager_; }
 
  private:
   static constexpr std::string_view LOG_FILE{"simpledb.log"};

@@ -7,8 +7,7 @@
 namespace simpledb {
 void TableManagerTest() {
   SimpleDB db{"tblmgrtest", 400, 8};
-  Transaction txn{db.GetFileManager(), db.GetLogManager(),
-                  db.GetBufferManager()};
+  Transaction txn = db.NewTxn();
   TableManager table_manager{true, txn};
 
   Schema schema;
@@ -20,7 +19,7 @@ void TableManagerTest() {
   int size = layout.SlotSize();
   Schema& schema2 = layout.GetSchema();
   std::cout << "MyTable has slot size " << size << '\n';
-  std::cout << "Its fields are:";
+  std::cout << "Its fields are:\n";
   for (const auto& field_name : schema2.Fields()) {
     std::string type;
     if (schema2.Type(field_name) == INTEGER) {
@@ -29,7 +28,7 @@ void TableManagerTest() {
       int str_len = schema2.Length(field_name);
       type = "varchar(" + std::to_string(str_len) + ")";
     }
-    std::cout << field_name << ": " << type << '\n';
+    std::cout << "  " << field_name << ": " << type << '\n';
   }
   txn.Commit();
 }
