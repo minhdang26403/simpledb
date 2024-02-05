@@ -7,15 +7,6 @@ Layout::Layout(const Schema& schema) : schema_(schema) { CreateLayout(); }
 
 Layout::Layout(Schema&& schema) : schema_(std::move(schema)) { CreateLayout(); }
 
-void Layout::CreateLayout() {
-  int pos = sizeof(int);  // leave space for the empty/inuse flag
-  for (const auto& field_name : schema_.Fields()) {
-    offsets_.emplace(field_name, pos);
-    pos += LengthInBytes(field_name);
-  }
-  slot_size_ = pos;
-}
-
 int Layout::GetOffset(std::string_view field_name) const {
   auto entry = offsets_.find(field_name);
   if (entry == offsets_.end()) {
@@ -31,5 +22,14 @@ int Layout::LengthInBytes(std::string_view field_name) const {
   } else {  // field_type == VARCHAR
     return schema_.Length(field_name) + sizeof(int);
   }
+}
+
+void Layout::CreateLayout() {
+  int pos = sizeof(int);  // leave space for the empty/inuse flag
+  for (const auto& field_name : schema_.Fields()) {
+    offsets_.emplace(field_name, pos);
+    pos += LengthInBytes(field_name);
+  }
+  slot_size_ = pos;
 }
 }  // namespace simpledb

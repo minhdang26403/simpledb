@@ -39,7 +39,7 @@ class TableManager {
 
  private:
   static constexpr int MAX_NAME_LEN = 16;
-  std::unique_ptr<Layout> table_catalog_layout_;
-  std::unique_ptr<Layout> field_catalog_layout_;
+  Layout table_catalog_layout_;
+  Layout field_catalog_layout_;
 };
 }  // namespace simpledb

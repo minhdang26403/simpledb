@@ -13,6 +13,11 @@ namespace simpledb {
 class Layout {
  public:
   /**
+   * @brief Default constructor
+   */
+  Layout() = default;
+
+  /**
    * @brief This constructor creates a Layout object from a schema. This
    * constructor is used when a table is created. It determines the physical
    * offset of each field within each record.
@@ -21,9 +26,7 @@ class Layout {
   explicit Layout(const Schema& schema);
 
   /**
-   * @brief This constructor creates a Layout object from a schema. This
-   * constructor is used when a table is created. It determines the physical
-   * offset of each field within each record.
+   * @brief Move constructor
    * @param schema schema of the table's records
    */
   explicit Layout(Schema&& schema);
