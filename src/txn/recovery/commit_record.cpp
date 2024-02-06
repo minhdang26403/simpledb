@@ -3,7 +3,6 @@
 #include <memory>
 #include <span>  // NOLINT(build/include_order)
 #include <sstream>
-#include <string>
 
 #include "file/page.h"
 #include "log/log_manager.h"

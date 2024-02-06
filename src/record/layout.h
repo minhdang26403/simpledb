@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string>
+#include <string_view>
 
 #include "record/schema.h"
 #include "utils/data_type.h"
@@ -38,7 +38,7 @@ class Layout {
    * @param offsets the already-calculated offsets of the fields within a record
    * @param slot_size the already-calculated length of each record
    */
-  Layout(const Schema& schema, const HashMap<std::string, int>& offsets,
+  Layout(const Schema& schema, StringHashMap<int>& offsets,
          int slot_size)
       : schema_(schema), offsets_(offsets), slot_size_(slot_size) {}
 
@@ -76,7 +76,7 @@ class Layout {
   void CreateLayout();
 
   Schema schema_;
-  HashMap<std::string, int> offsets_;
+  StringHashMap<int> offsets_;
   int slot_size_{};
 };
 }  // namespace simpledb

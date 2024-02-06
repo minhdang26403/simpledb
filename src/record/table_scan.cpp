@@ -1,9 +1,9 @@
 #include "record/table_scan.h"
 
 namespace simpledb {
-TableScan::TableScan(Transaction& txn, const std::string& table_name,
+TableScan::TableScan(Transaction& txn, std::string_view table_name,
                      Layout& layout)
-    : txn_(txn), layout_(layout), filename_(table_name + ".tbl") {
+    : txn_(txn), layout_(layout), filename_(std::string(table_name) + ".tbl") {
   if (txn_.Size(filename_) == 0) {
     MoveToNewBlock();
   } else {

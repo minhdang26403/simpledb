@@ -3,7 +3,6 @@
 #include <filesystem>
 #include <fstream>
 #include <mutex>  // NOLINT(build/c++11)
-#include <string>
 #include <string_view>
 
 #include "file/block_id.h"
@@ -78,7 +77,7 @@ class FileManager {
   fs::path db_directory_path_;
   int block_size_{};
   bool is_new_{};
-  HashMap<std::string, std::fstream>
+  StringHashMap<std::fstream>
       open_files_;    // a table of open files in the database
   std::mutex mutex_;  // mutex to make FileManager thread-safe
 };

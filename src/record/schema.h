@@ -96,6 +96,6 @@ class Schema {
   const FieldInfo& GetFieldInfo(std::string_view field_name) const;
 
   std::vector<std::string> fields_;
-  HashMap<std::string, FieldInfo> info_;
+  StringHashMap<FieldInfo> info_;
 };
 }  // namespace simpledb

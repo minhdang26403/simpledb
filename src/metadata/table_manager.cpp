@@ -1,8 +1,5 @@
 #include "metadata/table_manager.h"
 
-#include <exception>
-#include <memory>
-#include <string>
 #include <utility>
 
 #include "record/layout.h"
@@ -70,7 +67,7 @@ Layout TableManager::GetLayout(std::string_view table_name, Transaction& txn) {
   }
 
   Schema schema;
-  HashMap<std::string, int> field_offsets;
+  StringHashMap<int> field_offsets;
   TableScan field_catalog{txn, "field_catalog", field_catalog_layout_};
 
   while (field_catalog.Next() &&

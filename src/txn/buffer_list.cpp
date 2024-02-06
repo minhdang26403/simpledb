@@ -1,7 +1,5 @@
 #include "txn/buffer_list.h"
 
-#include <exception>
-
 #include "buffer/buffer.h"
 #include "file/block_id.h"
 

@@ -1,8 +1,5 @@
 #include "log/log_manager.h"
 
-#include <span>
-#include <string_view>
-
 #include "file/block_id.h"
 #include "file/file_manager.h"
 #include "log/log_iterator.h"

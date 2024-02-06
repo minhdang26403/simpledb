@@ -1,6 +1,5 @@
 #include <optional>
 #include <string>
-#include <string_view>
 
 #include "query/constant.h"
 #include "record/layout.h"
@@ -22,7 +21,7 @@ class TableScan {
    * @param table_name name of the table
    * @param layout layout of a record in this table
    */
-  TableScan(Transaction& txn, const std::string& table_name, Layout& layout);
+  TableScan(Transaction& txn, std::string_view table_name, Layout& layout);
 
   // Methods that implement Scan
 

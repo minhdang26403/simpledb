@@ -1,7 +1,7 @@
 #include "file/file_manager.h"
 
 #include <memory>
-#include <tuple>
+#include <string>
 #include <utility>
 
 namespace simpledb {

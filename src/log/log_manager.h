@@ -3,7 +3,6 @@
 #include <mutex>  // NOLINT(build/c++11)
 #include <span>   // NOLINT(build/include_order)
 #include <string>
-#include <string_view>
 
 #include "file/block_id.h"
 #include "file/file_manager.h"

@@ -2,8 +2,6 @@
 
 #include <memory>
 #include <sstream>
-#include <string>
-#include <string_view>
 
 #include "file/block_id.h"
 #include "file/page.h"

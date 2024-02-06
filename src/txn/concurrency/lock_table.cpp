@@ -1,7 +1,5 @@
 #include "txn/concurrency/lock_table.h"
 
-#include <chrono>  // NOLINT(build/c++11)
-
 namespace simpledb {
 void LockTable::SharedLock(const BlockId& block) {
   std::unique_lock lock{mutex_};

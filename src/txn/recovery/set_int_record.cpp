@@ -2,8 +2,6 @@
 
 #include <memory>
 #include <sstream>
-#include <string>
-#include <string_view>
 
 #include "txn/recovery/log_record.h"
 #include "txn/transaction.h"

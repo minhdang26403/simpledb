@@ -1,7 +1,5 @@
 #include "log/log_iterator.h"
 
-#include <span>
-
 namespace simpledb {
 LogIterator::LogIterator(FileManager& file_manager, const BlockId& block)
     : file_manager_(file_manager),
