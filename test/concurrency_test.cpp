@@ -13,8 +13,8 @@ namespace simpledb {
 void RunA(FileManager& file_manager, LogManager& log_manager,
           BufferManager& buffer_manager) {
   Transaction txnA{file_manager, log_manager, buffer_manager};
-  BlockId block1{"testfile", 1};
-  BlockId block2{"testfile", 2};
+  BlockId block1{"test_file", 1};
+  BlockId block2{"test_file", 2};
   txnA.Pin(block1);
   txnA.Pin(block2);
 
@@ -35,8 +35,8 @@ void RunA(FileManager& file_manager, LogManager& log_manager,
 void RunB(FileManager& file_manager, LogManager& log_manager,
           BufferManager& buffer_manager) {
   Transaction txnB{file_manager, log_manager, buffer_manager};
-  BlockId block1{"testfile", 1};
-  BlockId block2{"testfile", 2};
+  BlockId block1{"test_file", 1};
+  BlockId block2{"test_file", 2};
   txnB.Pin(block1);
   txnB.Pin(block2);
 
@@ -57,8 +57,8 @@ void RunB(FileManager& file_manager, LogManager& log_manager,
 void RunC(FileManager& file_manager, LogManager& log_manager,
           BufferManager& buffer_manager) {
   Transaction txnC{file_manager, log_manager, buffer_manager};
-  BlockId block1{"testfile", 1};
-  BlockId block2{"testfile", 2};
+  BlockId block1{"test_file", 1};
+  BlockId block2{"test_file", 2};
   txnC.Pin(block1);
   txnC.Pin(block2);
 

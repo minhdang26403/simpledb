@@ -7,10 +7,10 @@
 
 namespace simpledb {
 void BufferTest() {
-  SimpleDB db{"buffertest", 400, 3};
+  SimpleDB db{"buffer_test", 400, 3};
   BufferManager& buffer_manager = db.GetBufferManager();
 
-  Buffer* buffer1 = buffer_manager.Pin(BlockId("testfile", 1));
+  Buffer* buffer1 = buffer_manager.Pin(BlockId("test_file", 1));
   Page& page1 = buffer1->Contents();
   int n = page1.GetInt(80);
   page1.SetInt(80, n + 1);
@@ -19,12 +19,12 @@ void BufferTest() {
   buffer_manager.Unpin(buffer1);
 
   // One of these pins will flush buffer1 to disk
-  Buffer* buffer2 = buffer_manager.Pin(BlockId("testfile", 2));
-  buffer_manager.Pin(BlockId("testfile", 3));
-  buffer_manager.Pin(BlockId("testfile", 4));
+  Buffer* buffer2 = buffer_manager.Pin(BlockId("test_file", 2));
+  buffer_manager.Pin(BlockId("test_file", 3));
+  buffer_manager.Pin(BlockId("test_file", 4));
 
   buffer_manager.Unpin(buffer2);
-  buffer2 = buffer_manager.Pin(BlockId("testfile", 1));
+  buffer2 = buffer_manager.Pin(BlockId("test_file", 1));
   Page& page2 = buffer2->Contents();
   page2.SetInt(80, 9999);  // This modification won't get written to disk
   buffer2->SetModified(1, 0);

@@ -9,26 +9,26 @@
 
 namespace simpledb {
 void BufferManagerTest() {
-  SimpleDB db{"buffermgrtest", 400, 3};
+  SimpleDB db{"buffer_manager_test", 400, 3};
   BufferManager& buffer_manager = db.GetBufferManager();
 
   std::vector<Buffer*> buff(6);
-  buff[0] = buffer_manager.Pin(BlockId("testfile", 0));
-  buff[1] = buffer_manager.Pin(BlockId("testfile", 1));
-  buff[2] = buffer_manager.Pin(BlockId("testfile", 2));
+  buff[0] = buffer_manager.Pin(BlockId("test_file", 0));
+  buff[1] = buffer_manager.Pin(BlockId("test_file", 1));
+  buff[2] = buffer_manager.Pin(BlockId("test_file", 2));
   buffer_manager.Unpin(buff[1]);
   buff[1] = nullptr;
-  buff[3] = buffer_manager.Pin(BlockId("testfile", 0));  // block 0 pinned twice
-  buff[4] = buffer_manager.Pin(BlockId("testfile", 1));  // block repinned
+  buff[3] = buffer_manager.Pin(BlockId("test_file", 0));  // block 0 pinned twice
+  buff[4] = buffer_manager.Pin(BlockId("test_file", 1));  // block repinned
   std::cout << "Available buffers: " << buffer_manager.Available() << '\n';
   std::cout << "Attempting to pin block 3...\n";
-  buff[5] = buffer_manager.Pin(BlockId("testfile", 3));
+  buff[5] = buffer_manager.Pin(BlockId("test_file", 3));
   if (buff[5] == nullptr) {
     std::cout << "No available buffers\n";
   }
   buffer_manager.Unpin(buff[2]);
   buff[2] = nullptr;
-  buff[5] = buffer_manager.Pin(BlockId("testfile", 3));
+  buff[5] = buffer_manager.Pin(BlockId("test_file", 3));
 
   std::cout << "Final Buffer Allocation:\n";
   for (size_t i = 0; i < buff.size(); i++) {

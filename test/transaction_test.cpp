@@ -2,20 +2,19 @@
 
 #include <iostream>
 #include <string>
-#include <string_view>
 
 #include "file/block_id.h"
 #include "server/simpledb.h"
 
 namespace simpledb {
 void TransactionTest() {
-  SimpleDB db{"txntest", 400, 8};
+  SimpleDB db{"txn_test", 400, 8};
   auto& file_manager = db.GetFileManager();
   auto& log_manager = db.GetLogManager();
   auto& buffer_manager = db.GetBufferManager();
 
   Transaction txn1{file_manager, log_manager, buffer_manager};
-  BlockId block{"testfile", 1};
+  BlockId block{"test_file", 1};
   txn1.Pin(block);
   // The block initially contains unknown bytes,
   // so don't log those values here.

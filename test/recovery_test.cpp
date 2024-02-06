@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <string_view>
 
 #include "buffer/buffer_manager.h"
 #include "file/block_id.h"
@@ -108,6 +107,6 @@ class RecoveryTest {
 }  // namespace simpledb
 
 int main() {
-  simpledb::RecoveryTest recovery_test{"recoverytest", "testfile"};
+  simpledb::RecoveryTest recovery_test{"recovery_test", "test_file"};
   recovery_test.Execute();
 }

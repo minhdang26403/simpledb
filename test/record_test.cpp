@@ -6,7 +6,7 @@
 
 namespace simpledb {
 void RecordTest() {
-  SimpleDB db{"recordtest", 400, 8};
+  SimpleDB db{"record_test", 400, 8};
   Transaction txn = db.NewTxn();
 
   Schema schema;
@@ -18,7 +18,7 @@ void RecordTest() {
     std::cout << field_name << " has offset " << offset << '\n';
   }
 
-  BlockId block{txn.Append("testfile")};
+  BlockId block{txn.Append("test_file")};
   txn.Pin(block);
   RecordPage record_page{txn, block, layout};
   record_page.Format();

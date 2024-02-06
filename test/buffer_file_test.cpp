@@ -7,9 +7,9 @@
 
 namespace simpledb {
 void BufferFileTest() {
-  SimpleDB db{"bufferfiletest", 400, 8};
+  SimpleDB db{"buffer_file_test", 400, 8};
   BufferManager& buffer_manager = db.GetBufferManager();
-  BlockId block{"testfile", 2};
+  BlockId block{"test_file", 2};
   int pos1 = 88;
 
   Buffer* buffer1 = buffer_manager.Pin(block);

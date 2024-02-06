@@ -1,7 +1,5 @@
 #include <iostream>
 #include <span>  // NOLINT(build/include_order)
-#include <string>
-#include <string_view>
 
 #include "file/page.h"
 #include "log/log_manager.h"

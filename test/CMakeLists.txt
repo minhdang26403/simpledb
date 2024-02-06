@@ -3,6 +3,7 @@ set(
   buffer_file_test
   buffer_manager_test
   buffer_test
+  catalog_test
   concurrency_test
   file_test
   layout_test

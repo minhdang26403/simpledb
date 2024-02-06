@@ -6,7 +6,7 @@
 
 namespace simpledb {
 void TableManagerTest() {
-  SimpleDB db{"tblmgrtest", 400, 8};
+  SimpleDB db{"table_manager_test", 400, 8};
   Transaction txn = db.NewTxn();
   TableManager table_manager{true, txn};
 
