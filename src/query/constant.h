@@ -24,7 +24,8 @@ class Constant {
    * @brief Construct a string constant
    * @param sval value of the string
    */
-  explicit Constant(std::string_view sval) : val_(std::in_place_index<1>, sval) {}
+  explicit Constant(std::string_view sval)
+      : val_(std::in_place_index<1>, sval) {}
 
   /**
    * @brief Evaluate the constant as an integer
@@ -37,6 +38,10 @@ class Constant {
    * @return the string value of the constant
    */
   std::string_view AsString() const noexcept { return std::get<1>(val_); }
+
+  const std::variant<int, std::string>& AsVariant() const noexcept {
+    return val_;
+  }
 
   /**
    * @brief Return whether two constants are equal. Two constants are equal if
