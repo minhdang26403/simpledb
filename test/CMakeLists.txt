@@ -8,6 +8,7 @@ set(
   file_test
   layout_test
   log_test
+  metadata_manager_test
   record_test
   recovery_test
   table_manager_test

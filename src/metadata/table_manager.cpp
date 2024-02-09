@@ -5,6 +5,7 @@
 #include "record/layout.h"
 #include "record/table_scan.h"
 #include "utils/data_type.h"
+#include <iostream>
 
 namespace simpledb {
 TableManager::TableManager(bool is_new, Transaction& txn) {
@@ -36,6 +37,7 @@ void TableManager::CreateTable(std::string_view table_name,
   table_catalog.SetString("table_name", table_name);
   table_catalog.SetInt("slot_size", layout.SlotSize());
   table_catalog.Close();
+  std::cout << "Create table {" << table_name << "} with slot size " << layout.SlotSize() << '\n';
 
   // insert a record into `field_catalog` for each field
   TableScan field_catalog{txn, "field_catalog", field_catalog_layout_};
@@ -46,6 +48,7 @@ void TableManager::CreateTable(std::string_view table_name,
     field_catalog.SetInt("type", schema.Type(field_name));
     field_catalog.SetInt("length", schema.Length(field_name));
     field_catalog.SetInt("offset", layout.GetOffset(field_name));
+    std::cout << "Insert field name {" << field_name << "} of table {" << table_name << "}\n";
   }
   field_catalog.Close();
 }
@@ -55,6 +58,7 @@ Layout TableManager::GetLayout(std::string_view table_name, Transaction& txn) {
   TableScan table_catalog{txn, "table_catalog", table_catalog_layout_};
 
   while (table_catalog.Next()) {
+    std::cout << table_catalog.GetString("table_name") << '\n';
     if (table_catalog.GetString("table_name") == table_name) {
       slot_size = table_catalog.GetInt("slot_size");
       break;
@@ -63,28 +67,27 @@ Layout TableManager::GetLayout(std::string_view table_name, Transaction& txn) {
   table_catalog.Close();
 
   if (slot_size == -1) {
-    throw std::runtime_error("The specified table does not exist");
+    std::string error_msg = "The ";
+    error_msg.append(table_name);
+    error_msg.append(" table does not exists");
+    throw std::runtime_error(error_msg);
   }
 
   Schema schema;
   StringHashMap<int> field_offsets;
   TableScan field_catalog{txn, "field_catalog", field_catalog_layout_};
 
-  while (field_catalog.Next() &&
-         field_catalog.GetString("table_name") != table_name) {
-  }
-
-  while (field_catalog.GetString("table_name") == table_name) {
-    std::string_view field_name = field_catalog.GetString("field_name");
-    int field_type = field_catalog.GetInt("type");
-    int field_length = field_catalog.GetInt("length");
-    int field_offset = field_catalog.GetInt("offset");
-    schema.AddField(field_name, field_type, field_length);
-    field_offsets.emplace(field_name, field_offset);
-    if (!field_catalog.Next()) {
-      break;
+  while (field_catalog.Next()) {
+    if (field_catalog.GetString("table_name") == table_name) {
+      std::string_view field_name = field_catalog.GetString("field_name");
+      int field_type = field_catalog.GetInt("type");
+      int field_length = field_catalog.GetInt("length");
+      int field_offset = field_catalog.GetInt("offset");
+      schema.AddField(field_name, field_type, field_length);
+      field_offsets.emplace(field_name, field_offset);
     }
   }
+  
   field_catalog.Close();
 
   return Layout{std::move(schema), field_offsets, slot_size};

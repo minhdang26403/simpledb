@@ -1,22 +1,21 @@
-#include "metadata/table_manager.h"
-
 #include <iostream>
 
 #include "server/simpledb.h"
 
 namespace simpledb {
-void TableManagerTest() {
-  SimpleDB db{"table_manager_test", 400, 8};
+void MetadataManagerTest() {
+  SimpleDB db{"metadata_manager_test", 400, 8};
   Transaction txn = db.NewTxn();
-  TableManager table_manager{true, txn};
-  auto l = table_manager.GetLayout("table_catalog", txn);
+  // [[maybe_unused]] auto& metadata_manager = db.GetMetadataManager();
+  MetadataManager metadata_manager {true, txn};
 
   Schema schema;
   schema.AddIntField("A");
   schema.AddStringField("B", 9);
-  table_manager.CreateTable("MyTable", schema, txn);
 
-  Layout layout = table_manager.GetLayout("MyTable", txn);
+  // Part 1: Table Metadata
+  metadata_manager.CreateTable("MyTable", schema, txn);
+  Layout layout = metadata_manager.GetLayout("MyTable", txn);
   int size = layout.SlotSize();
   Schema& schema2 = layout.GetSchema();
   std::cout << "MyTable has slot size " << size << '\n';
@@ -27,16 +26,17 @@ void TableManagerTest() {
       type = "int";
     } else {
       int str_len = schema2.Length(field_name);
-      type = "varchar(" + std::to_string(str_len) + ")";
+      type = "varchar(" + std::to_string(str_len) + ')';
     }
-    std::cout << "  " << field_name << ": " << type << '\n';
+    std::cout << field_name << ": " << type << '\n';
   }
   txn.Commit();
 }
+
 }  // namespace simpledb
 
 int main() {
-  simpledb::TableManagerTest();
+  simpledb::MetadataManagerTest();
 
   return 0;
 }
