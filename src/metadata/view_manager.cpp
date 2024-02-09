@@ -27,8 +27,8 @@ void ViewManager::CreateView(std::string_view view_name,
   view_catalog.Close();
 }
 
-std::optional<std::string_view> ViewManager::GetViewDef(
-    std::string_view view_name, Transaction& txn) {
+std::string_view ViewManager::GetViewDef(std::string_view view_name,
+                                         Transaction& txn) {
   TableScan view_catalog{txn, "view_catalog", layout_};
   std::optional<std::string_view> result;
   while (view_catalog.Next()) {
@@ -39,10 +39,10 @@ std::optional<std::string_view> ViewManager::GetViewDef(
   }
   view_catalog.Close();
 
-  if (result == std::nullopt) {
+  if (!result.has_value()) {
     throw std::runtime_error("The view does not exist");
   }
 
-  return result;
+  return result.value();
 }
 }  // namespace simpledb
