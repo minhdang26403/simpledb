@@ -15,7 +15,7 @@ class RecordPage {
    * @param block a reference to disk block
    * @param layout the layout of records stored in this record page
    */
-  RecordPage(Transaction& txn, BlockId block, Layout& layout)
+  RecordPage(Transaction& txn, const BlockId& block, Layout& layout)
       : txn_(txn), block_(block), layout_(layout) {
     txn_.Pin(block_);
   }

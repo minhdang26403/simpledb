@@ -29,18 +29,32 @@ void Transaction::Recover() {
 
 int Transaction::GetInt(const BlockId& block, int offset) {
   concurrency_manager_.SharedLock(block);
-  return my_buffers_.GetBuffer(block)->Contents().GetInt(offset);
+  auto buffer = my_buffers_.GetBuffer(block);
+  if (buffer == nullptr) {
+    throw std::runtime_error(
+        "GetInt: The transaction has not pinned the block");
+  }
+  return buffer->Contents().GetInt(offset);
 }
 
 std::string_view Transaction::GetString(const BlockId& block, int offset) {
   concurrency_manager_.SharedLock(block);
+  auto buffer = my_buffers_.GetBuffer(block);
+  if (buffer == nullptr) {
+    throw std::runtime_error(
+        "GetString: The transaction has not pinned the block");
+  }
   return my_buffers_.GetBuffer(block)->Contents().GetString(offset);
 }
 
 void Transaction::SetInt(const BlockId& block, int offset, int val,
                          bool OkToLog) {
   concurrency_manager_.ExclusiveLock(block);
-  Buffer* buffer = my_buffers_.GetBuffer(block);
+  auto buffer = my_buffers_.GetBuffer(block);
+  if (buffer == nullptr) {
+    throw std::runtime_error(
+        "SetInt: The transaction has not pinned the block");
+  }
   int lsn = -1;
   if (OkToLog) {
     lsn = recovery_manager_.SetInt(buffer, offset);
@@ -52,7 +66,11 @@ void Transaction::SetInt(const BlockId& block, int offset, int val,
 void Transaction::SetString(const BlockId& block, int offset,
                             std::string_view val, bool OkToLog) {
   concurrency_manager_.ExclusiveLock(block);
-  Buffer* buffer = my_buffers_.GetBuffer(block);
+  auto buffer = my_buffers_.GetBuffer(block);
+  if (buffer == nullptr) {
+    throw std::runtime_error(
+        "SetString: The transaction has not pinned the block");
+  }
   int lsn = -1;
   if (OkToLog) {
     lsn = recovery_manager_.SetString(buffer, offset);
