@@ -19,7 +19,10 @@ SimpleDB::SimpleDB(std::string_view dirname)
     std::cout << "Creating new database\n";
   } else {
     std::cout << "Recovering existing database\n";
+    txn.Recover();
   }
+  metadata_manager_ = std::make_unique<MetadataManager>(is_new, txn);
+  txn.Commit();
 }
 
 }  // namespace simpledb
