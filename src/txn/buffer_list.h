@@ -46,9 +46,6 @@ class BufferList {
   void UnpinAll();
 
  private:
-  // TODO(DANG): The original implementation handles the case where a
-  // transaction pins a buffer multiple times by also keeping a vector of pinned
-  // buffers
   std::unordered_map<BlockId, std::pair<Buffer*, int>> buffers_;
   BufferManager& buffer_manager_;
 };
