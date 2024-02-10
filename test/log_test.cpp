@@ -47,7 +47,7 @@ void CreateRecords(LogManager& log_manager, int start, int end) {
 }
 
 void LogTest() {
-  SimpleDB db{"logtest", 400, 8};
+  SimpleDB db{"log_test", 400, 8};
   LogManager& log_manager = db.GetLogManager();
 
   PrintLogRecords(log_manager, "The initial empty log file:");

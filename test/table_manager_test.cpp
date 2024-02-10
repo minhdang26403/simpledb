@@ -9,7 +9,6 @@ void TableManagerTest() {
   SimpleDB db{"table_manager_test", 400, 8};
   Transaction txn = db.NewTxn();
   TableManager table_manager{true, txn};
-  auto l = table_manager.GetLayout("table_catalog", txn);
 
   Schema schema;
   schema.AddIntField("A");
