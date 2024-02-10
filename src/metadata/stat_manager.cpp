@@ -51,34 +51,14 @@ StatInfo StatManager::CalculateTableStats(std::string_view table_name,
                                           Layout& layout, Transaction& txn) {
   int num_blocks = 0;
   int num_records = 0;
-  auto constant_hash = [](const Constant& val) {
-    const auto& underlying_val = val.AsVariant();
-    using variant = std::decay_t<decltype(underlying_val)>;
-    return std::hash<variant>{}(underlying_val);
-  };
-  StringHashMap<std::unordered_set<Constant, decltype(constant_hash)>>
-      distinct_values;
-  Schema& schema = layout.GetSchema();
   TableScan ts{txn, table_name, layout};
 
   while (ts.Next()) {
     num_blocks = ts.GetRID().BlockNumber() + 1;
     num_records++;
-    for (const auto& field : schema.Fields()) {
-      if (schema.Type(field) == INTEGER) {
-        distinct_values[field].insert(Constant{ts.GetInt(field)});
-      } else {
-        distinct_values[field].insert(Constant{ts.GetString(field)});
-      }
-    }
   }
   ts.Close();
 
-  StringHashMap<int> num_distinct_values;
-  for (const auto& [field, values] : distinct_values) {
-    num_distinct_values.emplace(field, values.size());
-  }
-
-  return StatInfo{num_blocks, num_records, num_distinct_values};
+  return StatInfo{num_blocks, num_records};
 }
 }  // namespace simpledb

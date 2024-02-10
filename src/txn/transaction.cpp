@@ -44,7 +44,7 @@ std::string_view Transaction::GetString(const BlockId& block, int offset) {
     throw std::runtime_error(
         "GetString: The transaction has not pinned the block");
   }
-  return my_buffers_.GetBuffer(block)->Contents().GetString(offset);
+  return buffer->Contents().GetString(offset);
 }
 
 void Transaction::SetInt(const BlockId& block, int offset, int val,

@@ -17,12 +17,11 @@ void BufferList::Pin(const BlockId& block) {
   if (buffer == nullptr) {
     throw std::runtime_error("No available buffer!");
   }
-  if (buffers_.contains(block)) {
-    buffers_.at(block).second++;
-    return;
+  if (!buffers_.contains(block)) {
+    buffers_.emplace(std::piecewise_construct, std::forward_as_tuple(block),
+                     std::forward_as_tuple(buffer, 0));
   }
-  buffers_.emplace(std::piecewise_construct, std::forward_as_tuple(block),
-                   std::forward_as_tuple(buffer, 0));
+  buffers_.at(block).second++;
 }
 
 void BufferList::Unpin(const BlockId& block) {
