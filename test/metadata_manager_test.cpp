@@ -35,7 +35,7 @@ void MetadataManagerTest() {
   TableScan ts{txn, "MyTable", layout};
   for (int i = 0; i < 50; i++) {
     ts.Insert();
-    int n = rand() % 50;
+    int n = rand() % 50;  // NOLINT(runtime/threadsafe_fn)
     ts.SetInt("A", n);
     ts.SetString("B", "rec" + std::to_string(n));
   }
@@ -59,14 +59,14 @@ void MetadataManagerTest() {
   IndexInfo index_info_a = index_map.at("A");
   std::cout << "B(indexA) = " << index_info_a.BlocksAccessed() << '\n';
   std::cout << "R(indexA) = " << index_info_a.RecordsOutput() << '\n';
-  std::cout << "V(indexA,A) = " << index_info_a.DistinctValues("A") << '\n';
-  std::cout << "V(indexA,B) = " << index_info_a.DistinctValues("B") << '\n';
+  std::cout << "V(indexA, A) = " << index_info_a.DistinctValues("A") << '\n';
+  std::cout << "V(indexA, B) = " << index_info_a.DistinctValues("B") << '\n';
 
   IndexInfo index_info_b = index_map.at("B");
   std::cout << "B(indexA) = " << index_info_b.BlocksAccessed() << '\n';
   std::cout << "R(indexA) = " << index_info_b.RecordsOutput() << '\n';
-  std::cout << "V(indexA,A) = " << index_info_b.DistinctValues("A") << '\n';
-  std::cout << "V(indexA,B) = " << index_info_b.DistinctValues("B") << '\n';
+  std::cout << "V(indexA, A) = " << index_info_b.DistinctValues("A") << '\n';
+  std::cout << "V(indexA, B) = " << index_info_b.DistinctValues("B") << '\n';
 
   txn.Commit();
 }

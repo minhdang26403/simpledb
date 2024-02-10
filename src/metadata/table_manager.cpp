@@ -1,11 +1,11 @@
 #include "metadata/table_manager.h"
 
+#include <string>
 #include <utility>
 
 #include "record/layout.h"
 #include "record/table_scan.h"
 #include "utils/data_type.h"
-#include <iostream>
 
 namespace simpledb {
 TableManager::TableManager(bool is_new, Transaction& txn) {

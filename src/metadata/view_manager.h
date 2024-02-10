@@ -1,6 +1,5 @@
 #pragma once
 
-#include <optional>
 #include <string_view>
 
 #include "metadata/table_manager.h"

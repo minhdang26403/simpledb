@@ -1,7 +1,6 @@
 #include "metadata/stat_manager.h"
 
 #include <string>
-#include <unordered_set>
 
 #include "metadata/stat_info.h"
 #include "metadata/table_manager.h"
