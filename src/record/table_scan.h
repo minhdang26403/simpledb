@@ -2,6 +2,7 @@
 #include <string>
 
 #include "query/constant.h"
+#include "query/update_scan.h"
 #include "record/layout.h"
 #include "record/record_page.h"
 #include "record/rid.h"
@@ -12,7 +13,7 @@ namespace simpledb {
 /**
  * Provide the abstraction of an arbitrarily large array of records
  */
-class TableScan {
+class TableScan final : public UpdateScan {
  public:
   /**
    * @brief Construct a new `TableScan` object that keeps track of a current
@@ -29,13 +30,13 @@ class TableScan {
    * @brief Position the scan before its first record. A subsequent call to
    * `Next()` will return the first record.
    */
-  void BeforeFirst();
+  void BeforeFirst() override;
 
   /**
    * @brief Move the scan to the next record
-   * @return true if there is a next record; otherwise, false
+   * @return false if there is no next record; otherwise, true
    */
-  bool Next();
+  bool Next() override;
 
   /**
    * @brief Return the value of the specified integer field in the current
@@ -43,14 +44,14 @@ class TableScan {
    * @param field_name name of the field
    * @return the field's integer value in the current record
    */
-  int GetInt(std::string_view field_name);
+  int GetInt(std::string_view field_name) override;
 
   /**
    * @brief Return the value of the specified string field in the current record
    * @param field_name name of the field
    * @return the field's string value in the current record
    */
-  std::string_view GetString(std::string_view field_name);
+  std::string_view GetString(std::string_view field_name) override;
 
   /**
    * @brief Return the value of the specified field in the current record. The
@@ -58,19 +59,19 @@ class TableScan {
    * @param field_name name of the field
    * @return the value of that field, expressed as a `Constant`
    */
-  Constant GetVal(std::string_view field_name);
+  Constant GetVal(std::string_view field_name) override;
 
   /**
    * @brief Return whether the table has the specified field
    * @param field_name name of the field
    * @return true if the table has that field; otherwise, false
    */
-  bool HasField(std::string_view field_name) noexcept;
+  bool HasField(std::string_view field_name) noexcept override;
 
   /**
    * @brief Close the scan
    */
-  void Close();
+  void Close() override;
 
   // Methods that implement UpdateScan
 
@@ -79,45 +80,45 @@ class TableScan {
    * @param field_name name of the field
    * @param val the new integer value
    */
-  void SetInt(std::string_view field_name, int val);
+  void SetInt(std::string_view field_name, int val) override;
 
   /**
    * @brief Modify the field value of the current record
    * @param field_name name of the field
    * @param val the new string value
    */
-  void SetString(std::string_view field_name, std::string_view val);
+  void SetString(std::string_view field_name, std::string_view val) override;
 
   /**
    * @brief Modify the field value of the current record
    * @param field_name name of the field
    * @param val the new value, expressed as a `Constant`
    */
-  void SetVal(std::string_view field_name, const Constant& val);
+  void SetVal(std::string_view field_name, const Constant& val) override;
 
   /**
    * @brief Insert a new record somewhere in the table. This method moves the
    * scan to the placeholder record. Transaction must call `SetInt`,
    * `SetString`, or `SetVal` to actually insert the record.
    */
-  void Insert();
+  void Insert() override;
 
   /**
    * @brief Delete the current record from the table
    */
-  void Delete();
+  void Delete() override;
 
   /**
    * @brief Position the scan so that the current record has the specified id
    * @param rid id of the desired record
    */
-  void MoveToRid(const RID& rid);
+  void MoveToRID(const RID& rid) override;
 
   /**
    * @brief Return the id of the current record
    * @return id of the current record
    */
-  RID GetRID() const noexcept {
+  RID GetRID() const noexcept override {
     return RID{record_page_.value().Block().BlockNumber(), current_slot_};
   }
 

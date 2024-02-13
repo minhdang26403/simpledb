@@ -2,6 +2,8 @@ add_subdirectory(buffer)
 add_subdirectory(file)
 add_subdirectory(log)
 add_subdirectory(metadata)
+add_subdirectory(plan)
+add_subdirectory(query)
 add_subdirectory(record)
 add_subdirectory(server)
 add_subdirectory(txn)
@@ -13,6 +15,7 @@ set(SIMPLEDB_LIBS
   simpledb_file
   simpledb_log
   simpledb_metadata
+  simpledb_query
   simpledb_record
   simpledb_server
   simpledb_txn

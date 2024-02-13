@@ -81,7 +81,7 @@ void TableScan::Insert() {
 
 void TableScan::Delete() { record_page_.value().Delete(current_slot_); }
 
-void TableScan::MoveToRid(const RID& rid) {
+void TableScan::MoveToRID(const RID& rid) {
   Close();
   BlockId block{filename_, rid.BlockNumber()};
   record_page_.emplace(txn_, block, layout_);
