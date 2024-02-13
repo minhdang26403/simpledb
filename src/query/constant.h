@@ -31,17 +31,13 @@ class Constant {
    * @brief Evaluate the constant as an integer
    * @return the integer value of the constant
    */
-  int AsInt() const noexcept { return std::get<0>(val_); }
+  int AsInt() const { return std::get<0>(val_); }
 
   /**
    * @brief Evaluate the constant as a string
    * @return the string value of the constant
    */
-  std::string_view AsString() const noexcept { return std::get<1>(val_); }
-
-  const std::variant<int, std::string>& AsVariant() const noexcept {
-    return val_;
-  }
+  std::string_view AsString() const { return std::get<1>(val_); }
 
   /**
    * @brief Return whether two constants are equal. Two constants are equal if
