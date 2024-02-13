@@ -9,8 +9,10 @@ set(
   layout_test
   log_test
   metadata_manager_test
+  product_test
   record_test
   recovery_test
+  scan_test
   table_manager_test
   table_scan_test
   transaction_test
