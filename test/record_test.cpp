@@ -26,7 +26,7 @@ void RecordTest() {
   std::cout << "Filling the page with random records.\n";
   int slot = record_page.InsertAfter(-1);
   while (slot >= 0) {
-    int n = rand() % 50;  // NOLINT(runtime/threadsafe_fn)
+    int n = arc4random() % 50;  // NOLINT(runtime/threadsafe_fn)
     record_page.SetInt(slot, "A", n);
     record_page.SetString(slot, "B", "rec" + std::to_string(n));
     std::cout << "inserting into slot " << slot << ": {" << n << ", "

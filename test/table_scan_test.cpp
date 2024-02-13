@@ -27,7 +27,7 @@ void TableScanTest() {
   TableScan ts{txn, "T", layout};
   for (int i = 0; i < 50; i++) {
     ts.Insert();
-    int n = rand() % 50;  // NOLINT(runtime/threadsafe_fn)
+    int n = arc4random() % 50;  // NOLINT(runtime/threadsafe_fn)
     ts.SetInt("A", n);
     ts.SetString("B", "rec" + std::to_string(n));
     std::cout << "inserting into slot " << ts.GetRID().ToString() << ": {" << n

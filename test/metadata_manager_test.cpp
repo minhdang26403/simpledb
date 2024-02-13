@@ -35,7 +35,7 @@ void MetadataManagerTest() {
   TableScan ts{txn, "MyTable", layout};
   for (int i = 0; i < 50; i++) {
     ts.Insert();
-    int n = rand() % 50;  // NOLINT(runtime/threadsafe_fn)
+    int n = arc4random() % 50;  // NOLINT(runtime/threadsafe_fn)
     ts.SetInt("A", n);
     ts.SetString("B", "rec" + std::to_string(n));
   }
