@@ -12,7 +12,7 @@ namespace simpledb {
 class Scan {
  public:
   /**
-   * @brief Define a virtual destructor for proper cleanup 
+   * @brief Define a virtual destructor for proper cleanup
    */
   virtual ~Scan() = default;
 
