@@ -38,15 +38,7 @@ void ScanTest1() {
   std::unique_ptr<Scan> scan2 = std::make_unique<TableScan>(txn, "T", layout);
   // selecting all records where A = 10
   Constant constant{10};
-
-  Expression lhs{"A"};
-  Expression rhs{constant};
-
-  // The lifetime of `lhs` and `rhs` must be greater than or equal to the
-  // lifetime of `term`
-  Term term{lhs, rhs};
-  // Undefined behavior: dangling references
-  // expression Term term {Expression{"A"}, Expression{constant}};
+  Term term {Expression{"A"}, Expression{constant}};
 
   Predicate predicate{term};
   std::cout << "The predicate is " << predicate.ToString() << '\n';

@@ -2,6 +2,7 @@
 
 #include <optional>
 #include <string>
+#include <utility>
 
 #include "plan/plan.h"
 #include "query/expression.h"
@@ -17,7 +18,9 @@ class Term {
    * @param lhs the left-hand side expression
    * @param rhs the right-hand side expression
    */
-  Term(const Expression& lhs, const Expression& rhs) : lhs_(lhs), rhs_(rhs) {}
+  template <typename Expr1, typename Expr2>
+  Term(Expr1&& lhs, Expr2&& rhs)
+      : lhs_(std::forward<Expr1>(lhs)), rhs_(std::forward<Expr2>(rhs)) {}
 
   /**
    * Return true if both of the term's expressions evaluate to the same
@@ -78,7 +81,7 @@ class Term {
   }
 
  private:
-  const Expression& lhs_;
-  const Expression& rhs_;
+  Expression lhs_;
+  Expression rhs_;
 };
 }  // namespace simpledb

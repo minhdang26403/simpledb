@@ -10,6 +10,8 @@ set(
   lexer_test
   log_test
   metadata_manager_test
+  parser_test
+  predicate_parser_test
   product_test
   record_test
   recovery_test

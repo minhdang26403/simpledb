@@ -12,9 +12,9 @@
 - [x] Transaction
 - [x] Schema, Layout
 - [x] Record Page, Table Scans 
-- Metadata Manager
-- Select Scans, Project Scans, Product Scans
-- Parser
+- [x] Metadata Manager
+- [x] Select Scans, Project Scans, Product Scans
+- [x] Parser
 - Planner
 - Static Hash Indexes
 - Btree Indexes
