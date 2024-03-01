@@ -19,6 +19,8 @@ class Term {
    * @param rhs the right-hand side expression
    */
   template <typename Expr1, typename Expr2>
+    requires std::is_same_v<std::decay_t<Expr1>, Expression> &&
+                 std::is_same_v<std::decay_t<Expr2>, Expression>
   Term(Expr1&& lhs, Expr2&& rhs)
       : lhs_(std::forward<Expr1>(lhs)), rhs_(std::forward<Expr2>(rhs)) {}
 

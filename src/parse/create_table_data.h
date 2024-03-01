@@ -1,6 +1,8 @@
 #pragma once
 
 #include <string>
+#include <utility>
+
 #include "record/schema.h"
 
 namespace simpledb {
@@ -13,10 +15,11 @@ class CreateTableData {
    * @brief Save the table name and schema
    * @param table_name the table name
    * @param schema the table schema
-   * TODO: Fix parameter type here?
    */
-  CreateTableData(std::string_view table_name, const Schema& schema)
-      : table_name_(table_name), schema_(schema) {}
+  template <typename Str, typename Sch>
+  CreateTableData(Str&& table_name, Sch&& schema)
+      : table_name_(std::forward<Str>(table_name)),
+        schema_(std::forward<Sch>(schema)) {}
 
   /**
    * @brief Return the name of the new table

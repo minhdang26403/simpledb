@@ -3,10 +3,6 @@
 #include <utility>
 
 namespace simpledb {
-Layout::Layout(const Schema& schema) : schema_(schema) { CreateLayout(); }
-
-Layout::Layout(Schema&& schema) : schema_(std::move(schema)) { CreateLayout(); }
-
 int Layout::GetOffset(std::string_view field_name) const {
   auto entry = offsets_.find(field_name);
   if (entry == offsets_.end()) {

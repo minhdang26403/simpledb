@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <utility>
 
 #include "query/expression.h"
 #include "query/predicate.h"
@@ -18,14 +19,14 @@ class ModifyData {
    * @param field_name the modified field
    * @param new_val new value of the modified field
    * @param predicate the modification predicate
-   * TODO: fix parameter type?
    */
-  ModifyData(std::string_view table_name, std::string_view field_name,
-             const Expression& new_val, const Predicate& predicate)
-      : table_name_(table_name),
-        field_name_(field_name),
-        new_val_(new_val),
-        predicate_(predicate) {}
+  template <typename Str1, typename Str2, typename Expr, typename Pred>
+  ModifyData(Str1&& table_name, Str2&& field_name, Expr&& new_val,
+             Pred&& predicate)
+      : table_name_(std::forward<Str1>(table_name)),
+        field_name_(std::forward<Str2>(field_name)),
+        new_val_(std::forward<Expr>(new_val)),
+        predicate_(std::forward<Pred>(predicate)) {}
 
   /**
    * @brief Return the name of the affected table
@@ -49,6 +50,7 @@ class ModifyData {
   /**
    * @brief Return the predicate that describes which records should be modified
    * @return the modification predicate
+   * TODO: Fix return type?
    */
   Predicate ModificationPredicate() const noexcept { return predicate_; }
 

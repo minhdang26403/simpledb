@@ -2,6 +2,7 @@
 
 #include <cassert>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "query/constant.h"
@@ -17,12 +18,16 @@ class InsertData {
    * @param table_name the table name
    * @param fields a list of field names
    * @param values a list of `Constant` values
-   * TODO: Fix parameter type?
    */
-  InsertData(std::string_view table_name,
-             const std::vector<std::string>& fields,
-             const std::vector<Constant>& values)
-      : table_name_(table_name), fields_(fields), values_(values) {
+  template <typename Str, typename VecStr, typename VecConst>
+    requires std::is_same_v<std::decay_t<Str>, std::string> &&
+                 std::is_same_v<std::decay_t<VecStr>,
+                                std::vector<std::string>> &&
+                 std::is_same_v<std::decay_t<VecConst>, std::vector<Constant>>
+  InsertData(Str&& table_name, VecStr&& fields, VecConst&& values)
+      : table_name_(std::forward<Str>(table_name)),
+        fields_(std::forward<VecStr>(fields)),
+        values_(std::forward<VecConst>(values)) {
     assert(fields_.size() == values_.size());
   }
 

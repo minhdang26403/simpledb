@@ -2,6 +2,7 @@
 
 #include <string>
 #include <type_traits>
+#include <utility>
 #include <variant>
 
 namespace simpledb {
@@ -24,8 +25,10 @@ class Constant {
    * @brief Construct a string constant
    * @param sval value of the string
    */
-  explicit Constant(std::string_view sval)
-      : val_(std::in_place_index<1>, sval) {}
+  template <typename Str>
+    requires std::is_constructible_v<std::string, std::decay_t<Str>>
+  explicit Constant(Str&& sval)
+      : val_(std::in_place_index<1>, std::forward<Str>(sval)) {}
 
   /**
    * @brief Evaluate the constant as an integer

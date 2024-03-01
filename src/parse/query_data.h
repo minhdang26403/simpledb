@@ -18,11 +18,11 @@ class QueryData {
    * @param tables list of table names
    * @param predicate the query predicate
    */
-  template <typename T, typename U, typename V>
-  QueryData(T&& fields, U&& tables, V&& predicate)
-      : fields_(std::forward<T>(fields)),
-        tables_(std::forward<U>(tables)),
-        predicate_(std::forward<V>(predicate)) {}
+  template <typename VecStr1, typename VecStr2, typename Pred>
+  QueryData(VecStr1&& fields, VecStr2&& tables, Pred&& predicate)
+      : fields_(std::forward<VecStr1>(fields)),
+        tables_(std::forward<VecStr2>(tables)),
+        predicate_(std::forward<Pred>(predicate)) {}
 
   /**
    * @brief Return the fields mentioned in the select clause

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <utility>
 
 #include "query/predicate.h"
 
@@ -16,8 +17,10 @@ class DeleteData {
    * @param predicate the predicate
    * TODO: Fix parameter type?
    */
-  DeleteData(std::string_view table_name, const Predicate& predicate)
-      : table_name_(table_name), predicate_(predicate) {}
+  template <typename Str, typename Pred>
+  DeleteData(Str&& table_name, Pred&& predicate)
+      : table_name_(std::forward<Str>(table_name)),
+        predicate_(std::forward<Pred>(predicate)) {}
 
   /**
    * @brief Return the name of the affected table

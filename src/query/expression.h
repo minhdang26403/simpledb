@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <utility>
 #include <variant>
 
 #include "query/constant.h"
@@ -17,14 +18,18 @@ class Expression {
    * @brief Construct a constant expression
    * @param val value of the constant
    */
-  explicit Expression(const Constant& val) : expr_(val) {}
+  template <typename Const>
+    requires std::is_same_v<std::decay_t<Const>, Constant>
+  explicit Expression(Const&& val) : expr_(std::forward<Const>(val)) {}
 
   /**
    * @brief Construct a field name expression
    * @param field_name name of the field
    */
-  explicit Expression(std::string_view field_name)
-      : expr_(std::in_place_index<1>, field_name) {}
+  template <typename Str>
+    requires std::is_constructible_v<std::string, std::decay_t<Str>>
+  explicit Expression(Str&& field_name)
+      : expr_(std::in_place_index<1>, std::forward<Str>(field_name)) {}
 
   /**
    * Evaluate the expression with respect to the

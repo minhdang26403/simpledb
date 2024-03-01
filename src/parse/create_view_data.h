@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <utility>
 
 #include "parse/query_data.h"
 
@@ -14,10 +15,11 @@ class CreateViewData {
    * @brief Save the view name and its definition
    * @param view_name the view name
    * @param query_data the view definition
-   * TODO: parameter type?
    */
-  CreateViewData(std::string_view view_name, const QueryData& query_data)
-      : view_name_(view_name), query_data_(query_data) {}
+  template <typename Str, typename QD>
+  CreateViewData(Str&& view_name, QD&& query_data)
+      : view_name_(std::forward<Str>(view_name)),
+        query_data_(std::forward<QD>(query_data)) {}
 
   /**
    * @brief Return the name of the new view

@@ -20,9 +20,9 @@ Expression Parser::ParseExpression() {
 }
 
 Term Parser::ParseTerm() {
-  Expression lhs{ParseExpression()};
+  auto lhs = ParseExpression();
   lexer_.EatDelim('=');
-  Expression rhs{ParseExpression()};
+  auto rhs = ParseExpression();
   return Term{lhs, rhs};
 }
 
@@ -78,7 +78,8 @@ Parser::GenericData Parser::ParseUpdateCommand() {
   } else if (lexer_.MatchKeyword("update")) {
     return ParseModify();
   }
-  return std::visit([](auto&& arg) -> GenericData { return arg; }, ParseCreate());
+  return std::visit([](auto&& arg) -> GenericData { return arg; },
+                    ParseCreate());
 }
 
 Parser::GenericCreateData Parser::ParseCreate() {
@@ -100,7 +101,7 @@ DeleteData Parser::ParseDelete() {
     lexer_.EatKeyword("where");
     predicate = ParsePredicate();
   }
-  return DeleteData{table_name, predicate};
+  return DeleteData{std::move(table_name), std::move(predicate)};
 }
 
 InsertData Parser::ParseInsert() {
@@ -114,7 +115,8 @@ InsertData Parser::ParseInsert() {
   lexer_.EatDelim('(');
   auto values = ParseConstList();
   lexer_.EatDelim(')');
-  return InsertData{table_name, fields, values};
+  return InsertData{std::move(table_name), std::move(fields),
+                    std::move(values)};
 }
 
 std::vector<std::string> Parser::ParseFieldList() {
@@ -151,24 +153,24 @@ ModifyData Parser::ParseModify() {
     lexer_.EatKeyword("where");
     predicate = ParsePredicate();
   }
-  return ModifyData{table_name, field_name, new_val, predicate};
+  return ModifyData{std::move(table_name), std::move(field_name),
+                    std::move(new_val), std::move(predicate)};
 }
 
 CreateTableData Parser::ParseCreateTable() {
   lexer_.EatKeyword("table");
   auto table_name = lexer_.EatID();
   lexer_.EatDelim('(');
-  Schema schema = ParseFieldDefs();
+  auto schema = ParseFieldDefs();
   lexer_.EatDelim(')');
-
-  return CreateTableData{table_name, schema};
+  return CreateTableData{std::move(table_name), std::move(schema)};
 }
 
 Schema Parser::ParseFieldDefs() {
-  Schema schema = ParseFieldDef();
+  auto schema = ParseFieldDef();
   if (lexer_.MatchDelim(',')) {
     lexer_.EatDelim(',');
-    Schema schema2 = ParseFieldDefs();
+    auto schema2 = ParseFieldDefs();
     schema.AddAll(schema2);
   }
   return schema;
@@ -198,9 +200,8 @@ CreateViewData Parser::ParseCreateView() {
   lexer_.EatKeyword("view");
   auto view_name = lexer_.EatID();
   lexer_.EatKeyword("as");
-  QueryData view_def = ParseQuery();
-
-  return CreateViewData{view_name, view_def};
+  auto view_def = ParseQuery();
+  return CreateViewData{std::move(view_name), std::move(view_def)};
 }
 
 CreateIndexData Parser::ParseCreateIndex() {
@@ -211,7 +212,7 @@ CreateIndexData Parser::ParseCreateIndex() {
   lexer_.EatDelim('(');
   auto field_name = ParseField();
   lexer_.EatDelim(')');
-
-  return CreateIndexData{index_name, table_name, field_name};
+  return CreateIndexData{std::move(index_name), std::move(table_name),
+                         std::move(field_name)};
 }
 }  // namespace simpledb
