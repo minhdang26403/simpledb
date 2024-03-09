@@ -40,7 +40,7 @@ class Constant {
    * @brief Evaluate the constant as a string
    * @return the string value of the constant
    */
-  std::string_view AsString() const { return std::get<1>(val_); }
+  const std::string& AsString() const { return std::get<1>(val_); }
 
   /**
    * @brief Return whether two constants are equal. Two constants are equal if

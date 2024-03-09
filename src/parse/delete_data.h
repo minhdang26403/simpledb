@@ -15,7 +15,6 @@ class DeleteData {
    * @brief Save the table name and predicate
    * @param table_name the table name
    * @param predicate the predicate
-   * TODO: Fix parameter type?
    */
   template <typename Str, typename Pred>
   DeleteData(Str&& table_name, Pred&& predicate)
@@ -26,13 +25,13 @@ class DeleteData {
    * @brief Return the name of the affected table
    * @return name of the affected table
    */
-  std::string TableName() const noexcept { return table_name_; }
+  const std::string& TableName() const noexcept { return table_name_; }
 
   /**
    * @brief Return the predicate that describes which records should be deleted
    * @return the deletion predicate
    */
-  Predicate DeletionPredicate() const noexcept { return predicate_; }
+  const Predicate& DeletionPredicate() const noexcept { return predicate_; }
 
  private:
   std::string table_name_;

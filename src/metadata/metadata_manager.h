@@ -35,7 +35,7 @@ class MetadataManager {
     view_manager_.CreateView(view_name, view_def, txn);
   }
 
-  std::string_view GetViewDef(std::string_view view_name, Transaction& txn) {
+  std::string GetViewDef(std::string_view view_name, Transaction& txn) {
     return view_manager_.GetViewDef(view_name, txn);
   }
 

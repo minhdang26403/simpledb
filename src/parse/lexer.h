@@ -19,9 +19,22 @@ class Lexer {
  public:
   /**
    * @brief Create a new lexical analyzer for the specified SQL statement
+   * The requires-clause prevents this custom constructor from shadowing the
+   * copy constructor
    * @param s the SQL statement
    */
-  explicit Lexer(const std::string& s);
+  template <typename Str>
+    requires(!std::is_same_v<std::decay_t<Str>, Lexer>)
+  explicit Lexer(Str&& s)
+      : keywords_({"select", "from", "where", "and", "insert", "into", "values",
+                   "delete", "update", "set", "create", "table", "int",
+                   "varchar", "view", "as", "index", "on"}),
+        tokenizer_(std::forward<Str>(s)) {
+    tokenizer_.OrdinaryChar('.');    // disallow "." in identifiers
+    tokenizer_.WordChars('_', '_');  // allow "_" in identifiers
+    tokenizer_.LowerCaseMode(true);  // ids and keywords are converted
+    NextToken();
+  }
 
   // Methods to check the status of the current token
 
@@ -50,7 +63,7 @@ class Lexer {
    * @param w the keyword string
    * @return true if that keyword is the current token
    */
-  bool MatchKeyword(const std::string& w) const noexcept;
+  bool MatchKeyword(std::string_view w) const noexcept;
 
   /**
    * @brief Return true if the current token is a legal identifier
@@ -86,7 +99,7 @@ class Lexer {
    * keyword. Otherwise, move to the next token.
    * @param w the keyword string
    */
-  void EatKeyword(const std::string& w);
+  void EatKeyword(std::string_view w);
 
   /**
    * @brief Throw an exception if the current token is not an identifier.

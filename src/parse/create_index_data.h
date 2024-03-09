@@ -25,21 +25,20 @@ class CreateIndexData {
   /**
    * @brief Return the name of the index
    * @return name of the index
-   * TODO: return type?
    */
-  std::string IndexName() const noexcept { return index_name_; }
+  const std::string& IndexName() const noexcept { return index_name_; }
 
   /**
    * @brief Return the name of the indexed table
    * @return name of the indexed table
    */
-  std::string TableName() const noexcept { return table_name_; }
+  const std::string& TableName() const noexcept { return table_name_; }
 
   /**
    * @brief Return the name of the indexed field
    * @return name of the indexed field
    */
-  std::string FieldName() const noexcept { return field_name_; }
+  const std::string& FieldName() const noexcept { return field_name_; }
 
  private:
   std::string index_name_;

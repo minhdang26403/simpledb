@@ -62,6 +62,6 @@ class SetStringRecord : public LogRecord {
   int txn_id_{};
   BlockId block_;
   int offset_{};
-  std::string_view val_;
+  std::string val_;
 };
 }  // namespace simpledb

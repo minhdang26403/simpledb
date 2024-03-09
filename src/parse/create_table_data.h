@@ -25,14 +25,13 @@ class CreateTableData {
    * @brief Return the name of the new table
    * @return name of the new table
    */
-  std::string TableName() const noexcept { return table_name_; }
+  const std::string& TableName() const noexcept { return table_name_; }
 
   /**
    * @brief Return the schema of the new table
    * @return schema of the new table
-   * TODO: can return a const reference here?
    */
-  Schema NewSchema() const noexcept { return schema_; }
+  const Schema& NewSchema() const noexcept { return schema_; }
 
  private:
   std::string table_name_;

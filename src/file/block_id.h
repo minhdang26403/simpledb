@@ -26,12 +26,9 @@ class BlockId {
 
   /**
    * @brief Retrieve the filename to which this block belongs
-   * @return a non-owning view of the filename
+   * @return the filename
    */
-  std::string_view Filename() const noexcept {
-    // TODO(DANG): return string or string_view?
-    return filename_;
-  }
+  const std::string& Filename() const noexcept { return filename_; }
 
   /**
    * @brief Retrieve the logical block number of this block within the file
@@ -67,7 +64,7 @@ class BlockId {
   bool operator!=(const BlockId& other) const noexcept;
 
  private:
-  std::string filename_;  // TODO(DANG): string copy or reference
+  std::string filename_;
   int block_num_{};
 };
 

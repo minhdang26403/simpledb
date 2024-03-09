@@ -78,7 +78,7 @@ Layout TableManager::GetLayout(std::string_view table_name, Transaction& txn) {
          field_catalog.GetString("table_name") != table_name) {
   }
   while (field_catalog.GetString("table_name") == table_name) {
-    std::string_view field_name = field_catalog.GetString("field_name");
+    auto field_name = field_catalog.GetString("field_name");
     int field_type = field_catalog.GetInt("type");
     int field_length = field_catalog.GetInt("length");
     int field_offset = field_catalog.GetInt("offset");

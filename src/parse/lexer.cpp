@@ -3,17 +3,6 @@
 #include <string>
 
 namespace simpledb {
-Lexer::Lexer(const std::string& s)
-    : keywords_({"select", "from", "where", "and", "insert", "into", "values",
-                 "delete", "update", "set", "create", "table", "int", "varchar",
-                 "view", "as", "index", "on"}),
-      tokenizer_(s) {
-  tokenizer_.OrdinaryChar('.');    // disallow "." in identifiers
-  tokenizer_.WordChars('_', '_');  // allow "_" in identifiers
-  tokenizer_.LowerCaseMode(true);  // ids and keywords are converted
-  NextToken();
-}
-
 bool Lexer::MatchDelim(char d) const noexcept {
   return d == static_cast<char>(tokenizer_.ttype);
 }
@@ -26,7 +15,7 @@ bool Lexer::MatchStringConstant() const noexcept {
   return '\'' == static_cast<char>(tokenizer_.ttype);
 }
 
-bool Lexer::MatchKeyword(const std::string& w) const noexcept {
+bool Lexer::MatchKeyword(std::string_view w) const noexcept {
   return tokenizer_.ttype == StreamTokenizer::TT_WORD && tokenizer_.sval == w;
 }
 
@@ -60,7 +49,7 @@ std::string Lexer::EatStringConstant() {
   return s;
 }
 
-void Lexer::EatKeyword(const std::string& w) {
+void Lexer::EatKeyword(std::string_view w) {
   if (!MatchKeyword(w)) {
     throw BadSyntaxException();
   }

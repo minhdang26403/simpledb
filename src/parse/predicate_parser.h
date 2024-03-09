@@ -14,7 +14,9 @@ class PredicateParser {
    * @brief Construct a new Predicate Parser object
    * @param s the string to parse
    */
-  explicit PredicateParser(const std::string& s) : lexer_(s) {}
+  template <typename Str>
+    requires(!std::is_same_v<std::decay_t<Str>, PredicateParser>)
+  explicit PredicateParser(Str&& s) : lexer_(std::forward<Str>(s)) {}
 
   /**
    * @brief Extract an identifier token and return the name of that identifier.

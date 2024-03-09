@@ -77,7 +77,7 @@ void RunC(FileManager& file_manager, LogManager& log_manager,
 }
 
 void ConcurrencyTest() {
-  SimpleDB db{"concurrencytest", 400, 8};
+  SimpleDB db{"concurrency_test", 400, 8};
   auto& file_manager = db.GetFileManager();
   auto& log_manager = db.GetLogManager();
   auto& buffer_manager = db.GetBufferManager();

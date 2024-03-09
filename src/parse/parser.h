@@ -32,9 +32,9 @@ class Parser {
   /**
    * @brief Construct a new Parser object
    * @param statement the statement to parse
-   * TODO: Fix parameter type of `s`?
    */
-  explicit Parser(const std::string& statement) : lexer_(statement) {}
+  template <typename Str>
+  explicit Parser(Str&& statement) : lexer_(std::forward<Str>(statement)) {}
 
   /**
    * @brief Extract an identifier token and return the name of that identifier.

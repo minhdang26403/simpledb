@@ -24,9 +24,8 @@ class CreateViewData {
   /**
    * @brief Return the name of the new view
    * @return name of the new view
-   * TODO: return type?
    */
-  std::string ViewName() const noexcept { return view_name_; }
+  const std::string& ViewName() const noexcept { return view_name_; }
 
   /**
    * @brief Return the definition of the new view

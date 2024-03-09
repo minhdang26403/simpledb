@@ -3,17 +3,6 @@
 #include <algorithm>
 
 namespace simpledb {
-StreamTokenizer::StreamTokenizer(const std::string& is) : input_(is), buf_(20) {
-  WordChars('a', 'z');
-  WordChars('A', 'Z');
-  WordChars(128 + 32, 255);
-  WhitespaceChars(0, ' ');
-  CommentChar('/');
-  QuoteChar('"');
-  QuoteChar('\'');
-  ParseNumbers();
-}
-
 void StreamTokenizer::ResetSyntax() noexcept {
   for (int i = ctype_.size(); --i >= 0;) {
     ctype_[i] = 0;
@@ -297,13 +286,15 @@ int StreamTokenizer::NextToken() {
       }
       return NextToken();
     } else if (c == '/' && slash_slash_comments_p_) {
-      while ((c = input_.get()) != '\n' && c != '\r' && c != eof) {}
+      while ((c = input_.get()) != '\n' && c != '\r' && c != eof) {
+      }
       peekc_ = c;
       return NextToken();
     } else {
       /* Now see if it is still a single line comment */
       if ((ctype_['/'] & CT_COMMENT) != 0) {
-        while ((c = input_.get()) != '\n' && c != '\r' && c != eof) {}
+        while ((c = input_.get()) != '\n' && c != '\r' && c != eof) {
+        }
         peekc_ = c;
         return NextToken();
       } else {
@@ -314,7 +305,8 @@ int StreamTokenizer::NextToken() {
   }
 
   if ((ctype & CT_COMMENT) != 0) {
-    while ((c = input_.get()) != '\n' && c != '\r' && c != eof) {}
+    while ((c = input_.get()) != '\n' && c != '\r' && c != eof) {
+    }
     peekc_ = c;
     return NextToken();
   }

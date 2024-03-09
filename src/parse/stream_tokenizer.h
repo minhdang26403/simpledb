@@ -48,9 +48,25 @@ class StreamTokenizer {
    * - Ends of lines are treated as white space, not as separate tokens.
    * - C-style and C++-style comments are not recognized.
    *
+   * We use universal reference as parameter type instead of string_view since
+   * `istringstream` constructor does not accept string_view as argument The.
+   * However, this is possible from C++26. The requires-clause prevents this
+   * custom constructor from shadowing the copy constructor
+   *
    * @param is an input string
    */
-  explicit StreamTokenizer(const std::string& is);
+  template <typename Str>
+    requires(!std::is_same_v<std::decay_t<Str>, StreamTokenizer>)
+  explicit StreamTokenizer(Str&& is) : input_(std::forward<Str>(is)), buf_(20) {
+    WordChars('a', 'z');
+    WordChars('A', 'Z');
+    WordChars(128 + 32, 255);
+    WhitespaceChars(0, ' ');
+    CommentChar('/');
+    QuoteChar('"');
+    QuoteChar('\'');
+    ParseNumbers();
+  }
 
   /**
    * @brief Reset this tokenizer's syntax table so that all characters are

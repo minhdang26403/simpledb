@@ -20,10 +20,6 @@ class InsertData {
    * @param values a list of `Constant` values
    */
   template <typename Str, typename VecStr, typename VecConst>
-    requires std::is_same_v<std::decay_t<Str>, std::string> &&
-                 std::is_same_v<std::decay_t<VecStr>,
-                                std::vector<std::string>> &&
-                 std::is_same_v<std::decay_t<VecConst>, std::vector<Constant>>
   InsertData(Str&& table_name, VecStr&& fields, VecConst&& values)
       : table_name_(std::forward<Str>(table_name)),
         fields_(std::forward<VecStr>(fields)),
@@ -35,21 +31,21 @@ class InsertData {
    * @brief Return the name of the affected table
    * @return name of the affected table
    */
-  std::string TableName() const noexcept { return table_name_; }
+  const std::string& TableName() const noexcept { return table_name_; }
 
   /**
    * @brief Return a list of fields for which values will be specified in the
    * new record
    * @return a list of field names
    */
-  std::vector<std::string> Fields() const noexcept { return fields_; }
+  const std::vector<std::string>& Fields() const noexcept { return fields_; }
 
   /**
    * @brief Return a list of values for the specified fields. There is a one-one
    * correspondence between this list of values and the list of fields.
    * @return a list of `Constant` values
    */
-  std::vector<Constant> Values() const noexcept { return values_; }
+  const std::vector<Constant>& Values() const noexcept { return values_; }
 
  private:
   std::string table_name_;

@@ -64,7 +64,7 @@ class Expression {
    * field
    * @return the expression as a field name
    */
-  std::string_view AsFieldName() const { return std::get<1>(expr_); }
+  const std::string& AsFieldName() const { return std::get<1>(expr_); }
 
   /**
    * Determine if all of the fields mentioned in this expression are contained

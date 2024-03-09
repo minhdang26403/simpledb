@@ -15,18 +15,18 @@ std::string GetStringFromUser() {
 void PrintCurrentToken(StreamTokenizer& tok,
                        const std::unordered_set<std::string>& keywords) {
   if (tok.ttype == StreamTokenizer::TT_NUMBER) {
-    std::cout << "IntConstant " << tok.nval << '\n';
+    std::cout << "IntConstant: " << tok.nval << '\n';
   } else if (tok.ttype == StreamTokenizer::TT_WORD) {
     std::string word = tok.sval;
     if (keywords.contains(word)) {
-      std::cout << "Keyword " << word << '\n';
+      std::cout << "Keyword: " << word << '\n';
     } else {
-      std::cout << "Id " << word << '\n';
+      std::cout << "Id: " << word << '\n';
     }
   } else if (tok.ttype == '\'') {
-    std::cout << "StringConstant " << tok.sval << '\n';
+    std::cout << "StringConstant: " << tok.sval << '\n';
   } else {
-    std::cout << "Delimiter " << static_cast<char>(tok.ttype) << '\n';
+    std::cout << "Delimiter: " << static_cast<char>(tok.ttype) << '\n';
   }
 }
 
@@ -36,8 +36,7 @@ void TokenizerTest() {
       "values", "delete",  "update", "set", "create", "table",
       "int",    "varchar", "view",   "as",  "index",  "on"};
 
-  std::string s = GetStringFromUser();
-  StreamTokenizer tok{s};
+  StreamTokenizer tok{GetStringFromUser()};
   tok.OrdinaryChar('.');
   tok.LowerCaseMode(true);  // ids and keywords are converted to lower case
   while (tok.NextToken() != StreamTokenizer::TT_EOF) {
