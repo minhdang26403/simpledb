@@ -12,7 +12,7 @@ class ProductScan final : public Scan {
    * @param scan1 the left-hand side scan
    * @param scan2 the right-hand side scan
    */
-  ProductScan(Scan& scan1, Scan& scan2);
+  ProductScan(std::unique_ptr<Scan> scan1, std::unique_ptr<Scan> scan2);
 
   /**
    * @brief Position the scan before its first record. In particular, the LHS
@@ -67,7 +67,7 @@ class ProductScan final : public Scan {
   void Close() override;
 
  private:
-  Scan& scan1_;
-  Scan& scan2_;
+  std::unique_ptr<Scan> scan1_;
+  std::unique_ptr<Scan> scan2_;
 };
 }  // namespace simpledb

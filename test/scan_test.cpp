@@ -42,9 +42,9 @@ void ScanTest1() {
 
   Predicate predicate{term};
   std::cout << "The predicate is " << predicate.ToString() << '\n';
-  std::unique_ptr<Scan> scan3 = std::make_unique<SelectScan>(*scan2, predicate);
+  std::unique_ptr<Scan> scan3 = std::make_unique<SelectScan>(std::move(scan2), predicate);
   StringSet fields = {"B"};
-  std::unique_ptr<Scan> scan4 = std::make_unique<ProjectScan>(*scan3, fields);
+  std::unique_ptr<Scan> scan4 = std::make_unique<ProjectScan>(std::move(scan3), fields);
   while (scan4->Next()) {
     std::cout << scan4->GetString("B") << '\n';
   }
@@ -90,17 +90,17 @@ void ScanTest2() {
 
   std::unique_ptr<Scan> s1 = std::make_unique<TableScan>(txn, "T1", layout1);
   std::unique_ptr<Scan> s2 = std::make_unique<TableScan>(txn, "T2", layout2);
-  std::unique_ptr<Scan> s3 = std::make_unique<ProductScan>(*s1, *s2);
+  std::unique_ptr<Scan> s3 = std::make_unique<ProductScan>(std::move(s1), std::move(s2));
   // selecting all records where A = C
   Expression lhs{"A"}, rhs{"C"};
   Term term{lhs, rhs};
   Predicate predicate{term};
   std::cout << "The predicate is " << predicate.ToString() << '\n';
-  std::unique_ptr<Scan> s4 = std::make_unique<SelectScan>(*s3, predicate);
+  std::unique_ptr<Scan> s4 = std::make_unique<SelectScan>(std::move(s3), predicate);
 
   // projecting on [B, D]
   StringSet fields = {"B", "D"};
-  std::unique_ptr<Scan> s5 = std::make_unique<ProjectScan>(*s4, fields);
+  std::unique_ptr<Scan> s5 = std::make_unique<ProjectScan>(std::move(s4), fields);
   while (s5->Next()) {
     std::cout << s5->GetString("B") << " " << s5->GetString("D") << '\n';
   }

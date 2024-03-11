@@ -18,7 +18,7 @@ class ProjectScan final : public Scan {
    * @param scan the underlying scan
    * @param field_list the list of field names
    */
-  ProjectScan(Scan& scan, const StringSet& field_list);
+  ProjectScan(std::unique_ptr<Scan> scan, const StringSet& field_list);
 
   void BeforeFirst() override;
 
@@ -37,7 +37,7 @@ class ProjectScan final : public Scan {
  private:
   std::string ErrorMessage(std::string_view field_name) const;
 
-  Scan& scan_;
+  std::unique_ptr<Scan> scan_;
   const StringSet& field_list_;
 };
 }  // namespace simpledb

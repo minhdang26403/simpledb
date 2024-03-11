@@ -17,7 +17,7 @@ class SelectScan final : public UpdateScan {
    * @param scan the scan of the underlying query
    * @param predicate the selection predicate
    */
-  SelectScan(Scan& scan, Predicate& predicate);
+  SelectScan(std::unique_ptr<Scan> scan, Predicate& predicate);
 
   // Scan methods
   void BeforeFirst() override;
@@ -50,7 +50,7 @@ class SelectScan final : public UpdateScan {
   void MoveToRID(const RID& rid) override;
 
  private:
-  Scan& scan_;
+  std::unique_ptr<Scan> scan_;
   Predicate& predicate_;
 };
 }  // namespace simpledb

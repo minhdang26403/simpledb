@@ -46,7 +46,7 @@ void ProductTest() {
 
   std::unique_ptr<Scan> s1 = std::make_unique<TableScan>(txn, "T1", layout1);
   std::unique_ptr<Scan> s2 = std::make_unique<TableScan>(txn, "T2", layout2);
-  std::unique_ptr<Scan> s3 = std::make_unique<ProductScan>(*s1, *s2);
+  std::unique_ptr<Scan> s3 = std::make_unique<ProductScan>(std::move(s1), std::move(s2));
   while (s3->Next()) {
     std::cout << s3->GetString("B") << '\n';
   }
