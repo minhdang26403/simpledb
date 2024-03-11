@@ -20,15 +20,15 @@ set(SIMPLEDB_CLANG_SEARCH_PATH "/usr/local/bin" "/usr/bin" "/usr/local/opt/llvm/
   "/opt/homebrew/opt/llvm@14/bin/ /opt/homebrew/opt/llvm/bin/")
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-  if(CMAKE_CXX_COMPILER_VERSION MATCHES "^16.")
+  if(CMAKE_CXX_COMPILER_VERSION MATCHES "^17.")
     message(STATUS "You're using ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}")
   else()
-    message(WARNING "!! We recommend that you use clang-16 for developing SimpleDB. You're using ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}, a different version.")
+    message(WARNING "!! We recommend that you use clang-17 for developing SimpleDB. You're using ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}, a different version.")
   endif()
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
   message(STATUS "You're using ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}")
 else()
-  message(WARNING "!! We recommend that you use clang-16 for developing SimpleDB. You're using ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}, which is not clang.")
+  message(WARNING "!! We recommend that you use clang-17 for developing SimpleDB. You're using ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}, which is not clang.")
 endif()
 
 # #####################################################################################################################

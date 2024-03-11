@@ -1,5 +1,7 @@
 #include "query/product_scan.h"
 
+#include <utility>
+
 namespace simpledb {
 ProductScan::ProductScan(std::unique_ptr<Scan> scan1,
                          std::unique_ptr<Scan> scan2)

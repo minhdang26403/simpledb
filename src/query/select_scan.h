@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "query/predicate.h"
 #include "query/scan.h"
 #include "query/update_scan.h"

@@ -1,9 +1,11 @@
 #include "query/project_scan.h"
 
 #include <string>
+#include <utility>
 
 namespace simpledb {
-ProjectScan::ProjectScan(std::unique_ptr<Scan> scan, const StringSet& field_list)
+ProjectScan::ProjectScan(std::unique_ptr<Scan> scan,
+                         const StringSet& field_list)
     : scan_(std::move(scan)), field_list_(field_list) {}
 
 void ProjectScan::BeforeFirst() { scan_->BeforeFirst(); }

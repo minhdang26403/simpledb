@@ -1,5 +1,7 @@
 #include "query/select_scan.h"
 
+#include <utility>
+
 namespace simpledb {
 SelectScan::SelectScan(std::unique_ptr<Scan> scan, Predicate& predicate)
     : scan_(std::move(scan)), predicate_(predicate) {}
