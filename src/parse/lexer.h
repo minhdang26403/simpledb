@@ -2,6 +2,7 @@
 
 #include <exception>
 #include <string>
+#include <utility>
 
 #include "parse/stream_tokenizer.h"
 #include "utils/data_type.h"

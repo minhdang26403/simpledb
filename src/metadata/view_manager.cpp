@@ -1,5 +1,6 @@
 #include "metadata/view_manager.h"
 
+#include <string>
 #include <utility>
 
 #include "record/layout.h"
@@ -28,7 +29,7 @@ void ViewManager::CreateView(std::string_view view_name,
 }
 
 std::string ViewManager::GetViewDef(std::string_view view_name,
-                                         Transaction& txn) {
+                                    Transaction& txn) {
   TableScan view_catalog{txn, "view_catalog", layout_};
   std::string result;
   while (view_catalog.Next()) {
