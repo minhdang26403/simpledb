@@ -2,7 +2,6 @@
 
 #include <algorithm>
 #include <memory>
-#include <utility>
 
 #include "plan/plan.h"
 #include "query/predicate.h"
@@ -20,8 +19,8 @@ class SelectPlan : public Plan {
    * @param plan the subquery
    * @param predicate the predicate
    */
-  SelectPlan(std::unique_ptr<Plan> plan, Predicate& predicate)
-      : plan_(std::move(plan)), predicate_(predicate) {}
+  SelectPlan(const std::shared_ptr<Plan>& plan, const Predicate& predicate)
+      : plan_(plan), predicate_(predicate) {}
 
   /**
    * @brief Create a `select` scan for this query
@@ -78,7 +77,7 @@ class SelectPlan : public Plan {
   Schema& GetSchema() noexcept override { return plan_->GetSchema(); }
 
  private:
-  std::unique_ptr<Plan> plan_;
-  Predicate& predicate_;
+  std::shared_ptr<Plan> plan_;
+  Predicate predicate_;
 };
 }  // namespace simpledb

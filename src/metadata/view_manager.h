@@ -38,7 +38,8 @@ class ViewManager {
    * @param txn the transaction retrieving view definition
    * @return definition of the view
    */
-  std::string GetViewDef(std::string_view view_name, Transaction& txn);
+  std::optional<std::string> GetViewDef(std::string_view view_name,
+                                        Transaction& txn);
 
  private:
   static constexpr int MAX_VIEW_DEF = 100;

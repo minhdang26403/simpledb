@@ -39,6 +39,6 @@ class ProjectScan final : public Scan {
   std::string ErrorMessage(std::string_view field_name) const;
 
   std::unique_ptr<Scan> scan_;
-  const StringSet& field_list_;
+  StringSet field_list_;
 };
 }  // namespace simpledb

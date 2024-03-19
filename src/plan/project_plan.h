@@ -1,7 +1,6 @@
 #pragma once
 
 #include <memory>
-#include <utility>
 #include <string>
 #include <vector>
 
@@ -21,9 +20,9 @@ class ProjectPlan : public Plan {
    * @param plan the subquery
    * @param field_list the list of fields
    */
-  ProjectPlan(std::unique_ptr<Plan> plan,
+  ProjectPlan(const std::shared_ptr<Plan>& plan,
               const std::vector<std::string>& field_list)
-      : plan_(std::move(plan)) {
+      : plan_(plan) {
     for (const auto& field_name : field_list) {
       schema_.Add(field_name, plan_->GetSchema());
     }
@@ -34,7 +33,8 @@ class ProjectPlan : public Plan {
    * @return the `project` scan
    */
   std::unique_ptr<Scan> Open() noexcept override {
-    return std::make_unique<ProjectScan>(plan_->Open(), schema_.Fields());
+    StringSet field_list{schema_.Fields().begin(), schema_.Fields().end()};
+    return std::make_unique<ProjectScan>(plan_->Open(), field_list);
   }
 
   /**
@@ -71,7 +71,7 @@ class ProjectPlan : public Plan {
   Schema& GetSchema() noexcept override { return schema_; }
 
  private:
-  std::unique_ptr<Plan> plan_;
+  std::shared_ptr<Plan> plan_;
   Schema schema_;
 };
 }  // namespace simpledb

@@ -38,7 +38,7 @@ class Plan {
   /**
    * @brief Return an estimate of the number of distinct values for the
    * specified field in the query's output table
-   * @param field_name name of the field
+   * @param field_name name of a field
    * @return the estimated number of distinct field values in the output
    */
   virtual int DistinctValues(std::string_view field_name) const noexcept = 0;

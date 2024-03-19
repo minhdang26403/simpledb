@@ -49,7 +49,7 @@ void MetadataManagerTest() {
   auto view_def = "select B from MyTable where A = 1";
   metadata_manager.CreateView("viewA", view_def, txn);
   auto v = metadata_manager.GetViewDef("viewA", txn);
-  std::cout << "View def = " << v << '\n';
+  std::cout << "View def = " << v.value_or("") << '\n';
 
   // Part 4: Index Metadata
   metadata_manager.CreateIndex("indexA", "MyTable", "A", txn);

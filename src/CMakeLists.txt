@@ -17,6 +17,7 @@ set(SIMPLEDB_LIBS
   simpledb_log
   simpledb_metadata
   simpledb_parse
+  simpledb_plan
   simpledb_query
   simpledb_record
   simpledb_server
