@@ -11,6 +11,7 @@ set(
   log_test
   metadata_manager_test
   parser_test
+  planner_student_test
   predicate_parser_test
   product_test
   record_test

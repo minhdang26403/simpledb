@@ -9,13 +9,13 @@
 - [x] Buffer Manager
 - [x] Recovery Manager
 - [x] Concurrency Manager
-- [x] Transaction
+- [x] Transaction Manager
 - [x] Schema, Layout
 - [x] Record Page, Table Scans 
 - [x] Metadata Manager
 - [x] Select Scans, Project Scans, Product Scans
-- [x] Parser
-- Planner
+- [x] Query Parser
+- [x] Query Planner
 - Static Hash Indexes
 - Btree Indexes
 - Materialization and Sorting

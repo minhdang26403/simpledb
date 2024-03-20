@@ -28,7 +28,7 @@ class BetterQueryPlanner final : public QueryPlanner {
    * @return a plan for that query
    */
   std::shared_ptr<Plan> CreatePlan(const QueryData& data,
-                                   Transaction& txn) override;
+                                   Transaction& txn) const override;
 
  private:
   MetadataManager& metadata_manager_;

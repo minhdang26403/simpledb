@@ -7,6 +7,7 @@
 #include "file/file_manager.h"
 #include "log/log_manager.h"
 #include "metadata/metadata_manager.h"
+#include "plan/planner.h"
 #include "txn/transaction.h"
 
 namespace simpledb {
@@ -47,6 +48,12 @@ class SimpleDB {
    */
   MetadataManager& GetMetadataManager() noexcept { return *metadata_manager_; }
 
+  /**
+   * @brief Get the query planner
+   * @return a reference to the query planner
+   */
+  Planner& GetPlanner() noexcept { return planner_; }
+
   // These methods aid in debugging
   /**
    * @brief Get the file manager
@@ -75,5 +82,6 @@ class SimpleDB {
   LogManager log_manager_;
   BufferManager buffer_manager_;
   std::unique_ptr<MetadataManager> metadata_manager_;
+  Planner planner_;
 };
 }  // namespace simpledb

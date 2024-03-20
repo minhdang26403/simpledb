@@ -11,7 +11,7 @@
 
 namespace simpledb {
 std::shared_ptr<Plan> BasicQueryPlanner::CreatePlan(const QueryData& data,
-                                                    Transaction& txn) {
+                                                    Transaction& txn) const {
   // Step 1: Create a plan for each mentioned table or view
   std::vector<std::shared_ptr<Plan>> plans;
   for (const auto& table_name : data.GetTables()) {

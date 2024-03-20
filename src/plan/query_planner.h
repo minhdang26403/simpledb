@@ -21,6 +21,6 @@ class QueryPlanner {
    * @return a plan for that query
    */
   virtual std::shared_ptr<Plan> CreatePlan(const QueryData& data,
-                                           Transaction& txn);
+                                           Transaction& txn) const = 0;
 };
 }  // namespace simpledb
