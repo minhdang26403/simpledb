@@ -32,26 +32,34 @@ class ModifyData {
    * @brief Return the name of the affected table
    * @return name of the affected table
    */
-  const std::string& TableName() const noexcept { return table_name_; }
+  const auto& TableName() const & noexcept { return table_name_; }
+
+  auto TableName() && noexcept { return std::move(table_name_); }
 
   /**
    * @brief Return the field whose values will be modified
    * @return name of the target field
    */
-  const std::string& TargetField() const noexcept { return field_name_; }
+  const auto& TargetField() const & noexcept { return field_name_; }
+  
+  auto TargetField() && noexcept { return std::move(field_name_); }
 
   /**
    * @brief Return an expression. Evaluating this expression for a record
    * produces the value that will be stored in the record's target field.
    * @return the target expression
    */
-  const Expression& NewValue() const noexcept { return new_val_; }
+  const auto& NewValue() const & noexcept { return new_val_; }
+
+  auto NewValue() && noexcept { return std::move(new_val_); }
 
   /**
    * @brief Return the predicate that describes which records should be modified
    * @return the modification predicate
    */
-  const Predicate& ModificationPredicate() const noexcept { return predicate_; }
+  const auto& ModificationPredicate() const & noexcept { return predicate_; }
+  
+  auto ModificationPredicate() && noexcept { return std::move(predicate_); }
 
  private:
   std::string table_name_;

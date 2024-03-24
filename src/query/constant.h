@@ -7,7 +7,7 @@
 
 namespace simpledb {
 // helper constant for the visitor
-template <class>
+template <typename>
 inline constexpr bool always_false_v = false;
 
 /**
@@ -37,10 +37,14 @@ class Constant {
   int AsInt() const { return std::get<0>(val_); }
 
   /**
-   * @brief Evaluate the constant as a string
+   * @brief Evaluate the constant as a string. This function is called when the
+   * object is an lvalue
    * @return the string value of the constant
    */
-  const std::string& AsString() const { return std::get<1>(val_); }
+  const std::string& AsString() const & { return std::get<1>(val_); }
+
+  // Overload for rvalue object
+  std::string AsString() && { return std::get<1>(std::move(val_)); }
 
   /**
    * @brief Return whether two constants are equal. Two constants are equal if

@@ -25,7 +25,9 @@ class CreateViewData {
    * @brief Return the name of the new view
    * @return name of the new view
    */
-  const std::string& ViewName() const noexcept { return view_name_; }
+  const auto& ViewName() const & noexcept { return view_name_; }
+
+  auto ViewName() && noexcept { return std::move(view_name_); }
 
   /**
    * @brief Return the definition of the new view

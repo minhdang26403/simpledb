@@ -31,21 +31,27 @@ class InsertData {
    * @brief Return the name of the affected table
    * @return name of the affected table
    */
-  const std::string& TableName() const noexcept { return table_name_; }
+  const auto& TableName() const & noexcept { return table_name_; }
+
+  auto TableName() && noexcept { return std::move(table_name_); }
 
   /**
    * @brief Return a list of fields for which values will be specified in the
    * new record
    * @return a list of field names
    */
-  const std::vector<std::string>& Fields() const noexcept { return fields_; }
+  const auto& Fields() const & noexcept { return fields_; }
+
+  auto Fields() && noexcept { return std::move(fields_); }
 
   /**
    * @brief Return a list of values for the specified fields. There is a one-one
    * correspondence between this list of values and the list of fields.
    * @return a list of `Constant` values
    */
-  const std::vector<Constant>& Values() const noexcept { return values_; }
+  const auto& Values() const & noexcept { return values_; }
+
+  auto Values() && noexcept { return std::move(values_); }
 
  private:
   std::string table_name_;

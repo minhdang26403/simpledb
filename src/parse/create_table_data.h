@@ -25,13 +25,17 @@ class CreateTableData {
    * @brief Return the name of the new table
    * @return name of the new table
    */
-  const std::string& TableName() const noexcept { return table_name_; }
+  const auto& TableName() const & noexcept { return table_name_; }
+
+  auto TableName() && noexcept { return std::move(table_name_); }
 
   /**
    * @brief Return the schema of the new table
    * @return schema of the new table
    */
-  const Schema& NewSchema() const noexcept { return schema_; }
+  const auto& NewSchema() const & noexcept { return schema_; }
+
+  auto NewSchema() && noexcept { return std::move(schema_); }
 
  private:
   std::string table_name_;

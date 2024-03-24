@@ -44,7 +44,13 @@ class Layout {
    * @brief Return the schema of the table's records
    * @return the table's record schema
    */
-  Schema& GetSchema() noexcept { return schema_; }
+  Schema& GetSchema() & noexcept { return schema_; }
+
+  // Overload for const lvalue
+  const Schema& GetSchema() const & noexcept { return schema_; }
+
+  // Overload for rvalue `Layout` object
+  Schema GetSchema() && noexcept { return std::move(schema_); }
 
   /**
    * @brief Return the offset of a specified field within a record

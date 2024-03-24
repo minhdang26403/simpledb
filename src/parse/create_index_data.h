@@ -26,19 +26,25 @@ class CreateIndexData {
    * @brief Return the name of the index
    * @return name of the index
    */
-  const std::string& IndexName() const noexcept { return index_name_; }
+  const auto& IndexName() const & noexcept { return index_name_; }
+
+  auto IndexName() && noexcept { return std::move(index_name_); }
 
   /**
    * @brief Return the name of the indexed table
    * @return name of the indexed table
    */
-  const std::string& TableName() const noexcept { return table_name_; }
+  const auto& TableName() const & noexcept { return table_name_; }
+
+  auto TableName() && noexcept { return std::move(table_name_); }
 
   /**
    * @brief Return the name of the indexed field
    * @return name of the indexed field
    */
-  const std::string& FieldName() const noexcept { return field_name_; }
+  const auto& FieldName() const & noexcept { return field_name_; }
+
+  auto FieldName() && noexcept { return std::move(field_name_); }
 
  private:
   std::string index_name_;

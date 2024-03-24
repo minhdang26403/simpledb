@@ -63,7 +63,10 @@ class Schema {
    * @brief Return a collection containing the name of each field in the schema
    * @return the collection of the schema's field names
    */
-  const std::vector<std::string>& Fields() const noexcept { return fields_; }
+  const auto& Fields() const & noexcept { return fields_; }
+
+  // Overload for rvalue
+  auto Fields() && noexcept { return std::move(fields_); }
 
   /**
    * @brief Return true if the specified field is in the schema

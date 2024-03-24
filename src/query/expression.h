@@ -56,7 +56,10 @@ class Expression {
    * constant
    * @return the expression as a constant
    */
-  Constant AsConstant() const { return std::get<0>(expr_); }
+  const Constant& AsConstant() const & { return std::get<0>(expr_); }
+
+  // Overload for rvalue object
+  Constant AsConstant() && { return std::get<0>(std::move(expr_)); }
 
   /**
    * Return the field name corresponding to the expression or throw
@@ -64,7 +67,10 @@ class Expression {
    * field
    * @return the expression as a field name
    */
-  const std::string& AsFieldName() const { return std::get<1>(expr_); }
+  const std::string& AsFieldName() const& { return std::get<1>(expr_); }
+
+  // Overload for rvalue object
+  std::string AsFieldName() && { return std::get<1>(std::move(expr_)); }
 
   /**
    * Determine if all of the fields mentioned in this expression are contained

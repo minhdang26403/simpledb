@@ -28,20 +28,26 @@ class QueryData {
    * @brief Return the fields mentioned in the select clause
    * @return a list of field names
    */
-  const std::vector<std::string>& GetFields() const noexcept { return fields_; }
+  const auto& GetFields() const & noexcept { return fields_; }
+  
+  auto GetFields() && noexcept { return std::move(fields_); }
 
   /**
    * @brief Return the tables mentioned in the from clause
    * @return a list of table names
    */
-  const std::vector<std::string>& GetTables() const noexcept { return tables_; }
+  const auto& GetTables() const & noexcept { return tables_; }
+
+  auto GetTables() && noexcept { return std::move(tables_); }
 
   /**
    * @brief Return the predicate that describes which records should be in the
    * ouput table
    * @return the query predicate
    */
-  const Predicate& GetPredicate() const noexcept { return predicate_; }
+  const auto& GetPredicate() const & noexcept { return predicate_; }
+  
+  auto GetPredicate() && noexcept { return std::move(predicate_); }
 
   /**
    * @brief Return the string representation of the query saved in this object

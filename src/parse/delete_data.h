@@ -25,13 +25,17 @@ class DeleteData {
    * @brief Return the name of the affected table
    * @return name of the affected table
    */
-  const std::string& TableName() const noexcept { return table_name_; }
+  const auto& TableName() const & noexcept { return table_name_; }
+  
+  auto TableName() && noexcept { return std::move(table_name_); }
 
   /**
    * @brief Return the predicate that describes which records should be deleted
    * @return the deletion predicate
    */
-  const Predicate& DeletionPredicate() const noexcept { return predicate_; }
+  const auto& DeletionPredicate() const & noexcept { return predicate_; }
+  
+  auto DeletionPredicate() && noexcept { return std::move(predicate_); }
 
  private:
   std::string table_name_;
