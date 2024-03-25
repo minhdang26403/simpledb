@@ -8,7 +8,7 @@
 namespace simpledb {
 void FileTest() {
   SimpleDB db{"file_test", 400, 8};
-  FileManager& file_manager = db.GetFileManager();
+  auto& file_manager = db.GetFileManager();
   BlockId block{"test_file", 2};
   int pos1 = 88;
 

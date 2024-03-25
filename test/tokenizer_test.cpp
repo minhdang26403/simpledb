@@ -17,7 +17,7 @@ void PrintCurrentToken(StreamTokenizer& tok,
   if (tok.ttype == StreamTokenizer::TT_NUMBER) {
     std::cout << "IntConstant: " << tok.nval << '\n';
   } else if (tok.ttype == StreamTokenizer::TT_WORD) {
-    std::string word = tok.sval;
+    auto word = tok.sval;
     if (keywords.contains(word)) {
       std::cout << "Keyword: " << word << '\n';
     } else {

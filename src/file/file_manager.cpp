@@ -28,7 +28,7 @@ void FileManager::Read(const BlockId& block, const Page& page) {
   std::scoped_lock lock{mutex_};
   std::fstream& file = GetFile(block.Filename());
   file.seekg(block.BlockNumber() * block_size_, std::ios_base::beg);
-  std::span<char> page_view = page.Contents();
+  auto page_view = page.Contents();
   // Read data from file into the page
   file.read(page_view.data(), page_view.size());
   // When reading an empty file, end of file condition occurs
@@ -53,7 +53,7 @@ void FileManager::Write(const BlockId& block, const Page& page) {
   if (file.tellp() == -1) {
     throw std::runtime_error("A failure occurred to the output file");
   }
-  std::span<char> page_view = page.Contents();
+  auto page_view = page.Contents();
   // Write data from page to the file
   file.write(page_view.data(), page_view.size());
   if (file.bad()) {

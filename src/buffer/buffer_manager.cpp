@@ -43,7 +43,7 @@ void BufferManager::Unpin(Buffer* buffer) {
 Buffer* BufferManager::Pin(const BlockId& block) {
   std::unique_lock lock{mutex_};
   auto timestamp = system_clock::now();
-  Buffer* buffer = TryToPin(block);
+  auto buffer = TryToPin(block);
 
   while (buffer == nullptr && !WaitingTooLong(timestamp)) {
     cv_.wait_for(lock, MAX_TIME);
@@ -60,7 +60,7 @@ bool BufferManager::WaitingTooLong(
 }
 
 Buffer* BufferManager::TryToPin(const BlockId& block) {
-  Buffer* buffer = FindExistingBuffer(block);
+  auto buffer = FindExistingBuffer(block);
   if (buffer == nullptr) {
     buffer = ChooseUnpinnedBuffer();
     if (buffer == nullptr) {

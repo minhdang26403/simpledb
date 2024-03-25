@@ -93,7 +93,7 @@ std::string Predicate::ToString() const {
     return "";
   }
 
-  std::string result = terms_.front().ToString();
+  auto result = terms_.front().ToString();
   for (size_t i = 1; i < terms_.size(); i++) {
     result.append(" and ");
     result.append(terms_[i].ToString());

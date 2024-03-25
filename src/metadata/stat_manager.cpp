@@ -33,7 +33,7 @@ StatInfo StatManager::GetStatInfo(std::string_view table_name, Layout& layout,
 void StatManager::RefreshStatistics(Transaction& txn) {
   table_stats_ = StringHashMap<StatInfo>{};
   num_calls_ = 0;
-  Layout table_catalog_layout = table_manager_.GetLayout("table_catalog", txn);
+  auto table_catalog_layout = table_manager_.GetLayout("table_catalog", txn);
   TableScan table_catalog{txn, "table_catalog", table_catalog_layout};
 
   while (table_catalog.Next()) {

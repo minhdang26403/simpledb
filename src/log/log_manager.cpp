@@ -53,7 +53,7 @@ int LogManager::Append(std::span<char> log_record) {
 }
 
 BlockId LogManager::AppendNewBlock() {
-  BlockId block = file_manager_.Append(log_file_);
+  auto block = file_manager_.Append(log_file_);
   log_page_.SetInt(0, file_manager_.BlockSize());
   file_manager_.Write(block, log_page_);
 

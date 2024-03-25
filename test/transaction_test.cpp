@@ -30,7 +30,7 @@ void TransactionTest() {
   std::cout << "Initial value at location 40 = " << sval << '\n';
 
   int new_ival = ival + 1;
-  std::string new_sval = std::string(sval) + "!";
+  auto new_sval = std::string(sval) + "!";
   txn2.SetInt(block, 80, new_ival, true);
   txn2.SetString(block, 40, new_sval, true);
   txn2.Commit();

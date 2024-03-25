@@ -6,7 +6,7 @@
 namespace simpledb {
 void MetadataManagerTest() {
   SimpleDB db{"metadata_manager_test"};
-  Transaction txn = db.NewTxn();
+  auto txn = db.NewTxn();
   auto& metadata_manager = db.GetMetadataManager();
 
   Schema schema;
@@ -15,9 +15,9 @@ void MetadataManagerTest() {
 
   // Part 1: Table Metadata
   metadata_manager.CreateTable("MyTable", schema, txn);
-  Layout layout = metadata_manager.GetLayout("MyTable", txn);
+  auto layout = metadata_manager.GetLayout("MyTable", txn);
   int size = layout.SlotSize();
-  Schema& schema2 = layout.GetSchema();
+  auto& schema2 = layout.GetSchema();
   std::cout << "MyTable has slot size " << size << '\n';
   std::cout << "Its fields are:\n";
   for (const auto& field_name : schema2.Fields()) {
@@ -56,13 +56,13 @@ void MetadataManagerTest() {
   metadata_manager.CreateIndex("indexB", "MyTable", "B", txn);
   auto index_map = metadata_manager.GetIndexInfo("MyTable", txn);
 
-  IndexInfo index_info_a = index_map.at("A");
+  const auto& index_info_a = index_map.at("A");
   std::cout << "B(indexA) = " << index_info_a.BlocksAccessed() << '\n';
   std::cout << "R(indexA) = " << index_info_a.RecordsOutput() << '\n';
   std::cout << "V(indexA, A) = " << index_info_a.DistinctValues("A") << '\n';
   std::cout << "V(indexA, B) = " << index_info_a.DistinctValues("B") << '\n';
 
-  IndexInfo index_info_b = index_map.at("B");
+  const auto& index_info_b = index_map.at("B");
   std::cout << "B(indexA) = " << index_info_b.BlocksAccessed() << '\n';
   std::cout << "R(indexA) = " << index_info_b.RecordsOutput() << '\n';
   std::cout << "V(indexA, A) = " << index_info_b.DistinctValues("A") << '\n';

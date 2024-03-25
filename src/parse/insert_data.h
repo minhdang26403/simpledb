@@ -31,7 +31,7 @@ class InsertData {
    * @brief Return the name of the affected table
    * @return name of the affected table
    */
-  const auto& TableName() const & noexcept { return table_name_; }
+  const auto& TableName() const& noexcept { return table_name_; }
 
   auto TableName() && noexcept { return std::move(table_name_); }
 

@@ -41,7 +41,7 @@ void Page::SetBytes(int offset, std::span<char> bytes) noexcept {
 }
 
 std::string_view Page::GetString(int offset) const noexcept {
-  std::span<char> bytes = GetBytes(offset);
+  auto bytes = GetBytes(offset);
 
   return std::string_view{bytes.data(), bytes.size()};
 }

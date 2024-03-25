@@ -1,5 +1,6 @@
 #include "query/select_scan.h"
 
+#include <iostream>
 #include <utility>
 
 namespace simpledb {
@@ -37,26 +38,65 @@ void SelectScan::Close() { scan_->Close(); }
 
 // UpdateScan methods
 void SelectScan::SetInt(std::string_view field_name, int val) {
-  dynamic_cast<UpdateScan*>(scan_.get())->SetInt(field_name, val);
+  auto update_scan = dynamic_cast<UpdateScan*>(scan_.get());
+  if (update_scan == nullptr) {
+    std::cout << "SetInt: the underlying scan is not an update scan\n";
+    return;
+  }
+  update_scan->SetInt(field_name, val);
 }
 
 void SelectScan::SetString(std::string_view field_name, std::string_view val) {
-  dynamic_cast<UpdateScan*>(scan_.get())->SetString(field_name, val);
+  auto update_scan = dynamic_cast<UpdateScan*>(scan_.get());
+  if (update_scan == nullptr) {
+    std::cout << "SetString: the underlying scan is not an update scan\n";
+    return;
+  }
+  update_scan->SetString(field_name, val);
 }
 
 void SelectScan::SetVal(std::string_view field_name, const Constant& val) {
-  dynamic_cast<UpdateScan*>(scan_.get())->SetVal(field_name, val);
+  auto update_scan = dynamic_cast<UpdateScan*>(scan_.get());
+  if (update_scan == nullptr) {
+    std::cout << "SetVal: the underlying scan is not an update scan\n";
+    return;
+  }
+  update_scan->SetVal(field_name, val);
 }
 
-void SelectScan::Delete() { dynamic_cast<UpdateScan*>(scan_.get())->Delete(); }
+void SelectScan::Delete() {
+  auto update_scan = dynamic_cast<UpdateScan*>(scan_.get());
+  if (update_scan == nullptr) {
+    std::cout << "Delete: the underlying scan is not an update scan\n";
+    return;
+  }
+  update_scan->Delete();
+}
 
-void SelectScan::Insert() { dynamic_cast<UpdateScan*>(scan_.get())->Insert(); }
+void SelectScan::Insert() {
+  auto update_scan = dynamic_cast<UpdateScan*>(scan_.get());
+  if (update_scan == nullptr) {
+    std::cout << "Insert: the underlying scan is not an update scan\n";
+    return;
+  }
+  update_scan->Insert();
+}
 
 RID SelectScan::GetRID() const {
-  return dynamic_cast<UpdateScan*>(scan_.get())->GetRID();
+  auto update_scan = dynamic_cast<UpdateScan*>(scan_.get());
+  if (update_scan == nullptr) {
+    std::cout << "GetRID: the underlying scan is not an update scan\n";
+    return RID{};
+  }
+  return update_scan->GetRID();
 }
 
 void SelectScan::MoveToRID(const RID& rid) {
-  dynamic_cast<UpdateScan*>(scan_.get())->MoveToRID(rid);
+  auto update_scan = dynamic_cast<UpdateScan*>(scan_.get());
+  if (update_scan == nullptr) {
+    std::cout << "MoveToRID: the underlying scan is not an update scan\n";
+    return;
+  }
+  update_scan->MoveToRID(rid);
 }
 }  // namespace simpledb

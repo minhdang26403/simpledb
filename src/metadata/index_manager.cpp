@@ -37,8 +37,8 @@ StringHashMap<IndexInfo> IndexManager::GetIndexInfo(std::string_view table_name,
     if (index_catalog.GetString("table_name") == table_name) {
       auto index_name = index_catalog.GetString("index_name");
       auto field_name = index_catalog.GetString("field_name");
-      Layout table_layout = table_manager_.GetLayout(table_name, txn);
-      StatInfo table_stat_info =
+      auto table_layout = table_manager_.GetLayout(table_name, txn);
+      auto table_stat_info =
           stat_manager_.GetStatInfo(table_name, table_layout, txn);
       result.emplace(std::piecewise_construct,
                      std::forward_as_tuple(field_name),

@@ -73,8 +73,8 @@ class BlockId {
 template <>
 struct std::hash<simpledb::BlockId> {
   size_t operator()(const simpledb::BlockId& block) const noexcept {
-    size_t h1 = std::hash<std::string_view>{}(block.Filename());
-    size_t h2 = std::hash<int>{}(block.BlockNumber());
+    auto h1 = std::hash<std::string_view>{}(block.Filename());
+    auto h2 = std::hash<int>{}(block.BlockNumber());
 
     return h1 ^ (h2 << 1);
   }

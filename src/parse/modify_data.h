@@ -41,7 +41,7 @@ class ModifyData {
    * @return name of the target field
    */
   const auto& TargetField() const & noexcept { return field_name_; }
-  
+
   auto TargetField() && noexcept { return std::move(field_name_); }
 
   /**
@@ -58,7 +58,7 @@ class ModifyData {
    * @return the modification predicate
    */
   const auto& ModificationPredicate() const & noexcept { return predicate_; }
-  
+
   auto ModificationPredicate() && noexcept { return std::move(predicate_); }
 
  private:

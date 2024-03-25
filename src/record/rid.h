@@ -11,6 +11,11 @@ namespace simpledb {
 class RID {
  public:
   /**
+   * @brief Default constructor for representing an invalid record id
+   */
+  RID() = default;
+
+  /**
    * @brief Create a RID for the record having the specified location in the
    * specified block.
    * @param block_num the block number where the record lives

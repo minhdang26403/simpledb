@@ -13,7 +13,7 @@ void PrintLogRecords(LogManager& log_manager, std::string_view msg) {
   auto iter = log_manager.Iterator();
 
   while (iter.HasNext()) {
-    std::span<char> record = iter.Next();
+    auto record = iter.Next();
     Page page{record.data(), record.size()};
     std::string s{page.GetString(0)};
     int npos = Page::StringLength(s);

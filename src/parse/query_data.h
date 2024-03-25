@@ -29,7 +29,7 @@ class QueryData {
    * @return a list of field names
    */
   const auto& GetFields() const & noexcept { return fields_; }
-  
+
   auto GetFields() && noexcept { return std::move(fields_); }
 
   /**
@@ -46,7 +46,7 @@ class QueryData {
    * @return the query predicate
    */
   const auto& GetPredicate() const & noexcept { return predicate_; }
-  
+
   auto GetPredicate() && noexcept { return std::move(predicate_); }
 
   /**

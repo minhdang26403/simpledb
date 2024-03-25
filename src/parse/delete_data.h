@@ -26,7 +26,7 @@ class DeleteData {
    * @return name of the affected table
    */
   const auto& TableName() const & noexcept { return table_name_; }
-  
+
   auto TableName() && noexcept { return std::move(table_name_); }
 
   /**
@@ -34,7 +34,7 @@ class DeleteData {
    * @return the deletion predicate
    */
   const auto& DeletionPredicate() const & noexcept { return predicate_; }
-  
+
   auto DeletionPredicate() && noexcept { return std::move(predicate_); }
 
  private:

@@ -18,7 +18,7 @@ Transaction SimpleDB::NewTxn() noexcept {
 
 SimpleDB::SimpleDB(std::string_view dirname)
     : SimpleDB(dirname, BLOCK_SIZE, BUFFER_SIZE) {
-  Transaction txn = NewTxn();
+  auto txn = NewTxn();
   bool is_new = file_manager_.IsNew();
   if (is_new) {
     std::cout << "Creating new database\n";

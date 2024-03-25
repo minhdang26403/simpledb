@@ -13,7 +13,7 @@ Buffer* BufferList::GetBuffer(const BlockId& block) const noexcept {
 }
 
 void BufferList::Pin(const BlockId& block) {
-  Buffer* buffer = buffer_manager_.Pin(block);
+  auto buffer = buffer_manager_.Pin(block);
   if (buffer == nullptr) {
     throw std::runtime_error("No available buffer!");
   }

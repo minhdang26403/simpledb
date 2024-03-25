@@ -8,12 +8,12 @@
 namespace simpledb {
 void BufferFileTest() {
   SimpleDB db{"buffer_file_test", 400, 8};
-  BufferManager& buffer_manager = db.GetBufferManager();
+  auto& buffer_manager = db.GetBufferManager();
   BlockId block{"test_file", 2};
   int pos1 = 88;
 
-  Buffer* buffer1 = buffer_manager.Pin(block);
-  Page& page1 = buffer1->Contents();
+  auto buffer1 = buffer_manager.Pin(block);
+  auto& page1 = buffer1->Contents();
   page1.SetString(pos1, "abcdefghijklm");
   int size = Page::StringLength("abcdefghijklm");
   int pos2 = pos1 + size;
@@ -21,8 +21,8 @@ void BufferFileTest() {
   buffer1->SetModified(1, 0);
   buffer_manager.Unpin(buffer1);
 
-  Buffer* buffer2 = buffer_manager.Pin(block);
-  Page& page2 = buffer2->Contents();
+  auto buffer2 = buffer_manager.Pin(block);
+  auto& page2 = buffer2->Contents();
   std::cout << "offset " << pos2 << " contains " << page2.GetInt(pos2) << '\n';
   std::cout << "offset " << pos1 << " contains " << page2.GetString(pos1)
             << '\n';

@@ -11,7 +11,7 @@
 namespace simpledb {
 void TableScanTest() {
   SimpleDB db{"table_test", 400, 8};
-  Transaction txn = db.NewTxn();
+  auto txn = db.NewTxn();
 
   Schema schema;
   schema.AddIntField("A");

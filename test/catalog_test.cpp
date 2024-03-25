@@ -7,9 +7,9 @@
 namespace simpledb {
 void CatalogTest() {
   SimpleDB db{"table_test", 400, 8};
-  Transaction txn = db.NewTxn();
+  auto txn = db.NewTxn();
   TableManager table_manager{true, txn};
-  Layout table_catalog_layout = table_manager.GetLayout("table_catalog", txn);
+  auto table_catalog_layout = table_manager.GetLayout("table_catalog", txn);
 
   std::cout << "Here are all the tables and their lengths.\n";
   TableScan table_catalog{txn, "table_catalog", table_catalog_layout};
@@ -21,7 +21,7 @@ void CatalogTest() {
   table_catalog.Close();
 
   std::cout << "\nHere are the fields for each table and their offsets\n";
-  Layout field_catalog_layout = table_manager.GetLayout("field_catalog", txn);
+  auto field_catalog_layout = table_manager.GetLayout("field_catalog", txn);
   TableScan field_catalog{txn, "field_catalog", field_catalog_layout};
   while (field_catalog.Next()) {
     auto table_name = field_catalog.GetString("table_name");

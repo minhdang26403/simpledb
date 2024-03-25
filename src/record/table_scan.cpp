@@ -97,7 +97,7 @@ void TableScan::MoveToBlock(int block_num) {
 
 void TableScan::MoveToNewBlock() {
   Close();
-  BlockId block = txn_.Append(filename_);
+  auto block = txn_.Append(filename_);
   record_page_.emplace(txn_, block, layout_);
   record_page_.value().Format();
   current_slot_ = -1;

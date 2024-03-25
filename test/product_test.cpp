@@ -11,7 +11,7 @@
 namespace simpledb {
 void ProductTest() {
   SimpleDB db{"product_test"};
-  Transaction txn = db.NewTxn();
+  auto txn = db.NewTxn();
 
   Schema schema1;
   schema1.AddIntField("A");

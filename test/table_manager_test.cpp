@@ -7,7 +7,7 @@
 namespace simpledb {
 void TableManagerTest() {
   SimpleDB db{"table_manager_test", 400, 8};
-  Transaction txn = db.NewTxn();
+  auto txn = db.NewTxn();
   TableManager table_manager{true, txn};
 
   Schema schema;
@@ -15,9 +15,9 @@ void TableManagerTest() {
   schema.AddStringField("B", 9);
   table_manager.CreateTable("MyTable", schema, txn);
 
-  Layout layout = table_manager.GetLayout("MyTable", txn);
+  auto layout = table_manager.GetLayout("MyTable", txn);
   int size = layout.SlotSize();
-  Schema& schema2 = layout.GetSchema();
+  auto& schema2 = layout.GetSchema();
   std::cout << "MyTable has slot size " << size << '\n';
   std::cout << "Its fields are:\n";
   for (const auto& field_name : schema2.Fields()) {
