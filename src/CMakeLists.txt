@@ -1,5 +1,6 @@
 add_subdirectory(buffer)
 add_subdirectory(file)
+add_subdirectory(index)
 add_subdirectory(log)
 add_subdirectory(metadata)
 add_subdirectory(parse)
@@ -14,6 +15,7 @@ add_library(simpledb STATIC ${ALL_OBJECT_FILES})
 set(SIMPLEDB_LIBS
   simpledb_buffer
   simpledb_file
+  simpledb_index_hash
   simpledb_log
   simpledb_metadata
   simpledb_parse

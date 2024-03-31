@@ -32,7 +32,7 @@ class IndexInfo {
    * TODO: fix return type and function parameter
    * @return the Index object associated with this information
    */
-  HashIndex open() { return HashIndex(); }
+  HashIndex Open() const { return HashIndex(txn_, index_name_, index_layout_); }
 
   /**
    * @brief Estimate the number of block accesses required to find all index

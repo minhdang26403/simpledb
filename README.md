@@ -16,11 +16,16 @@
 - [x] Select Scans, Project Scans, Product Scans
 - [x] Query Parser
 - [x] Query Planner
-- Static Hash Indexes
+- [x] Static Hash Indexes
 - Btree Indexes
 - Materialization and Sorting
 - MultiBuffer Sorting/Product
 - Query Optimization
+
+Backlog:
+- Unit tests:
+  + Query planner (need JDBC)
+  + Index (need JDBC)
 
 ## Optimization Plan
 - Log Manager:
