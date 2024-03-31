@@ -23,8 +23,11 @@ set(
   transaction_test
 )
 
+# enable_testing()
+
 foreach(file ${TEST_FILES})
   add_executable(${file} ${file}.cpp)
 
   target_link_libraries(${file} simpledb)
+  # add_test(NAME ${file} COMMAND ${file})
 endforeach()
