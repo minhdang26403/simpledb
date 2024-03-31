@@ -12,7 +12,7 @@ void HashIndex::BeforeFirst(const Constant& search_key) {
 bool HashIndex::Next() {
   auto& ts = table_scan_.value();
   while (ts.Next()) {
-    if (ts.GetVal("data_val") == search_key_.value()) {
+    if (ts.GetVal("key") == search_key_.value()) {
       return true;
     }
   }
@@ -20,26 +20,26 @@ bool HashIndex::Next() {
   return false;
 }
 
-RID HashIndex::GetDataRID() {
+RID HashIndex::GetRID() {
   auto& ts = table_scan_.value();
   int block_num = ts.GetInt("block");
   int id = ts.GetInt("id");
   return RID{block_num, id};
 }
 
-void HashIndex::Insert(const Constant& data_val, const RID& data_rid) {
-  BeforeFirst(data_val);
+void HashIndex::Insert(const Constant& key, const RID& rid) {
+  BeforeFirst(key);
   auto& ts = table_scan_.value();
   ts.Insert();
-  ts.SetInt("block", data_rid.BlockNumber());
-  ts.SetInt("id", data_rid.Slot());
-  ts.SetVal("data_val", data_val);
+  ts.SetInt("block", rid.BlockNumber());
+  ts.SetInt("id", rid.Slot());
+  ts.SetVal("key", key);
 }
 
-void HashIndex::Delete(const Constant& data_val, const RID& data_rid) {
-  BeforeFirst(data_val);
+void HashIndex::Delete(const Constant& key, const RID& rid) {
+  BeforeFirst(key);
   while (Next()) {
-    if (GetDataRID() == data_rid) {
+    if (GetRID() == rid) {
       table_scan_.value().Delete();
       return;
     }

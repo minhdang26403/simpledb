@@ -49,23 +49,23 @@ class HashIndex : public Index {
    * bucket
    * @return the RID stored in the current index record
    */
-  RID GetDataRID() override;
+  RID GetRID() override;
 
   /**
    * @brief Insert a new record into the table scan for the bucket
-   * @param data_val the data value in the new index record
-   * @param data_rid the RID in the new index record
+   * @param key the key of the new index record
+   * @param rid the RID of the new index record
    */
-  void Insert(const Constant& data_val, const RID& data_rid) override;
+  void Insert(const Constant& key, const RID& rid) override;
 
   /**
    * @brief Delete the specified record form the table scan for the bucket. The
    * method starts at the beginning of the scan, and loops through the records
    * until the specified record is found
-   * @param data_val the data value of the index record to delete
-   * @param data_rid the RID of the index record to delete
+   * @param key the key of the deleted index record
+   * @param rid the RID of the deleted index record
    */
-  void Delete(const Constant& data_val, const RID& data_rid) override;
+  void Delete(const Constant& key, const RID& rid) override;
 
   /**
    * @brief Close the index by closing the current table scan

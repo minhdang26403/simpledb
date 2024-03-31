@@ -26,23 +26,21 @@ class Index {
    * @brief Return the RID stored in the current index record
    * @return the RID stored in the current index record
    */
-  virtual RID GetDataRID() = 0;
+  virtual RID GetRID() = 0;
 
   /**
-   * @brief Insert an index record having the specified data (search key) and
-   * RID values
-   * @param data_val the data value in the new index record
-   * @param data_rid the RID in the new index record
+   * @brief Insert an index record having the specified key and RID values
+   * @param key the key of the new index record
+   * @param rid the RID of the new index record
    */
-  virtual void Insert(const Constant& data_val, const RID& data_rid) = 0;
+  virtual void Insert(const Constant& key, const RID& rid) = 0;
 
   /**
-   * @brief Delete the index record having the specified data (search key) and
-   * RID values
-   * @param data_val the data value of the index record to delete
-   * @param data_rid the RID of the index record to delete
+   * @brief Delete the index record having the specified key and RID values
+   * @param key the key of the deleted index record
+   * @param rid the RID of the deleted index record
    */
-  virtual void Delete(const Constant& data_val, const RID& data_rid) = 0;
+  virtual void Delete(const Constant& key, const RID& rid) = 0;
 
   /**
    * @brief Close the index
