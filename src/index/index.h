@@ -4,6 +4,9 @@
 #include "record/rid.h"
 
 namespace simpledb {
+/**
+ * This interface contains methods to traverse an index
+ */
 class Index {
  public:
   virtual ~Index() = default;

@@ -21,17 +21,16 @@ class HashIndex : public Index {
   /**
    * @brief Open a hash index for the specified index
    * @param txn the calling transaction
-   * @param index_name name of the index
-   * @param layout schema of the index records
+   * @param index_name the name of the index
+   * @param layout the schema of the index records
    */
   HashIndex(Transaction& txn, std::string_view index_name, const Layout& layout)
       : txn_(txn), index_name_(index_name), layout_(layout) {}
 
   /**
    * @brief Position the index before the first index record having the
-   * specified search key.
-   * The method hashes the search key to determine the bucket and then opens a
-   * table scan on the file corresponding to the bucket.
+   * specified search key. The method hashes the search key to determine the
+   * bucket and then opens a table scan on the file corresponding to the bucket.
    * The table scan for the previous bucket (if any) is closed.
    * @param search_key the search key value
    */
@@ -39,7 +38,7 @@ class HashIndex : public Index {
 
   /**
    * @brief Move to the next record having the search key. The method loops
-   * through the table scan for the bucket to look for a matching record
+   * through the table scan for the bucket to look for a matching record.
    * @return false if there are no more such index records
    */
   bool Next() override;
@@ -60,8 +59,8 @@ class HashIndex : public Index {
 
   /**
    * @brief Delete the specified record form the table scan for the bucket. The
-   * method starts at the beginning of the scan, and loops through the records
-   * until the specified record is found
+   * method starts at the beginning of the scan and loops through the records
+   * until the specified record is found.
    * @param key the key of the deleted index record
    * @param rid the RID of the deleted index record
    */
