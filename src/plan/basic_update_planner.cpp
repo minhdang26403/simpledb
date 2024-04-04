@@ -33,10 +33,10 @@ int BasicUpdatePlanner::ExecuteInsert(const InsertData& data,
 
 int BasicUpdatePlanner::ExecuteDelete(const DeleteData& data,
                                       Transaction& txn) {
-  std::unique_ptr<Plan> plan =
-      std::make_unique<TablePlan>(txn, data.TableName(), metadata_manager_);
+  std::shared_ptr<Plan> plan =
+      std::make_shared<TablePlan>(txn, data.TableName(), metadata_manager_);
   plan =
-      std::make_unique<SelectPlan>(std::move(plan), data.DeletionPredicate());
+      std::make_shared<SelectPlan>(std::move(plan), data.DeletionPredicate());
   auto scan = plan->Open();
 
   auto update_scan = dynamic_cast<UpdateScan*>(scan.get());
@@ -56,9 +56,9 @@ int BasicUpdatePlanner::ExecuteDelete(const DeleteData& data,
 
 int BasicUpdatePlanner::ExecuteModify(const ModifyData& data,
                                       Transaction& txn) {
-  std::unique_ptr<Plan> plan =
-      std::make_unique<TablePlan>(txn, data.TableName(), metadata_manager_);
-  plan = std::make_unique<SelectPlan>(std::move(plan),
+  std::shared_ptr<Plan> plan =
+      std::make_shared<TablePlan>(txn, data.TableName(), metadata_manager_);
+  plan = std::make_shared<SelectPlan>(std::move(plan),
                                       data.ModificationPredicate());
   auto scan = plan->Open();
 

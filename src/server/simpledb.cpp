@@ -4,6 +4,7 @@
 #include <string_view>
 #include <utility>
 
+#include "index/planner/index_update_planner.h"
 #include "log/log_manager.h"
 #include "plan/basic_query_planner.h"
 #include "plan/basic_update_planner.h"
@@ -29,8 +30,10 @@ SimpleDB::SimpleDB(std::string_view dirname)
   metadata_manager_ = std::make_unique<MetadataManager>(is_new, txn);
   std::unique_ptr<QueryPlanner> query_planner =
       std::make_unique<BasicQueryPlanner>(*metadata_manager_);
+  // std::unique_ptr<UpdatePlanner> update_planer =
+  //     std::make_unique<BasicUpdatePlanner>(*metadata_manager_);
   std::unique_ptr<UpdatePlanner> update_planer =
-      std::make_unique<BasicUpdatePlanner>(*metadata_manager_);
+      std::make_unique<IndexUpdatePlanner>(*metadata_manager_);
 
   planner_ = Planner{std::move(query_planner), std::move(update_planer)};
 

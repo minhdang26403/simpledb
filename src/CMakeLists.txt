@@ -17,6 +17,8 @@ set(SIMPLEDB_LIBS
   simpledb_file
   simpledb_index_btree
   simpledb_index_hash
+  simpledb_index_planner
+  simpledb_index_query
   simpledb_log
   simpledb_metadata
   simpledb_parse

@@ -1,7 +1,9 @@
 #pragma once
 
+#include <memory>
 #include <string>
 
+#include "index/btree/btree_index.h"
 #include "index/hash/hash_index.h"
 #include "metadata/stat_info.h"
 #include "record/layout.h"
@@ -29,10 +31,11 @@ class IndexInfo {
 
   /**
    * @brief Open the index described by this object
-   * TODO: fix return type and function parameter
    * @return the Index object associated with this information
    */
-  HashIndex Open() const { return HashIndex(txn_, index_name_, index_layout_); }
+  std::unique_ptr<Index> Open() const {
+    return std::make_unique<BTreeIndex>(txn_, index_name_, index_layout_);
+  }
 
   /**
    * @brief Estimate the number of block accesses required to find all index

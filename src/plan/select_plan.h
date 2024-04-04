@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <memory>
+#include <utility>
 
 #include "plan/plan.h"
 #include "query/predicate.h"
@@ -21,6 +22,9 @@ class SelectPlan : public Plan {
    */
   SelectPlan(const std::shared_ptr<Plan>& plan, const Predicate& predicate)
       : plan_(plan), predicate_(predicate) {}
+
+  SelectPlan(std::shared_ptr<Plan>&& plan, const Predicate& predicate)
+      : plan_(std::move(plan)), predicate_(predicate) {}
 
   /**
    * @brief Create a `select` scan for this query

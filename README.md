@@ -16,6 +16,7 @@
 - [x] Select Scans, Project Scans, Product Scans
 - [x] Query Parser
 - [x] Query Planner
+- JDBC Interfaces
 - [x] Static Hash Indexes
 - [x] Btree Indexes
 - Materialization and Sorting
@@ -25,7 +26,10 @@
 Backlog:
 - Unit tests:
   + Query planner (need JDBC)
-  + Index (need JDBC)
+  + index - need JDBC (IndexRetrieval, IndexUpdate)
+  + index/query (IndexJoin, IndexSelect)
+- Bugs:
+  + bugs in `GetIndexInfo` of `IndexManager`
 
 ## Optimization Plan
 - Log Manager:

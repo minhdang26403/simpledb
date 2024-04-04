@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "plan/plan.h"
@@ -23,6 +24,14 @@ class ProjectPlan : public Plan {
   ProjectPlan(const std::shared_ptr<Plan>& plan,
               const std::vector<std::string>& field_list)
       : plan_(plan) {
+    for (const auto& field_name : field_list) {
+      schema_.Add(field_name, plan_->GetSchema());
+    }
+  }
+
+  ProjectPlan(std::shared_ptr<Plan>&& plan,
+              const std::vector<std::string>& field_list)
+      : plan_(std::move(plan)) {
     for (const auto& field_name : field_list) {
       schema_.Add(field_name, plan_->GetSchema());
     }
