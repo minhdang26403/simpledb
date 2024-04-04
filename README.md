@@ -17,7 +17,7 @@
 - [x] Query Parser
 - [x] Query Planner
 - [x] Static Hash Indexes
-- Btree Indexes
+- [x] Btree Indexes
 - Materialization and Sorting
 - MultiBuffer Sorting/Product
 - Query Optimization

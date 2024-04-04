@@ -57,6 +57,26 @@ class Constant {
   }
 
   /**
+   * @brief Return whether this constant is less than the other constant. If
+   * they have different data types, the behavior is undefined
+   * @param other the other constant to compare with
+   * @return true if this constant is less than the other constant
+   */
+  bool operator<(const Constant& other) const noexcept {
+    return val_ < other.val_;
+  }
+
+  /**
+   * @brief Return whether this constant is greater than the other constant. If
+   * they have different data types, the behavior is undefined
+   * @param other the other constant to compare with
+   * @return true if this constant is greater than the other constant
+   */
+  bool operator>(const Constant& other) const noexcept {
+    return val_ > other.val_;
+  }
+
+  /**
    * @brief Return the string representation of this constant
    * @return the string representation
    */

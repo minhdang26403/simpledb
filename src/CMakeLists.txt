@@ -15,6 +15,7 @@ add_library(simpledb STATIC ${ALL_OBJECT_FILES})
 set(SIMPLEDB_LIBS
   simpledb_buffer
   simpledb_file
+  simpledb_index_btree
   simpledb_index_hash
   simpledb_log
   simpledb_metadata
